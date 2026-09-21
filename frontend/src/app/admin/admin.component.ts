@@ -27,6 +27,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   enquiries: Enquiry[] = [];
   loading = false;
   toast = '';
+  showPassword = false;
 
   ngOnInit(): void {
     this.api.session().subscribe({
