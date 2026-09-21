@@ -21,52 +21,47 @@
   <!-- Sidebar -->
   <aside class="sidebar" [class.open]="sidebarOpen">
 
+  <div class="sidebar-top">
+
     <div class="brand">
 
       <div class="logo">🚗</div>
 
       <div>
-
         <h2>CarFixHub</h2>
-
-        <p>Admin Dashboard</p>
-
+        <p>Admin Panel</p>
       </div>
 
     </div>
 
-    <nav>
+    <button class="close-menu" (click)="sidebarOpen=false">
+      ✕
+    </button>
 
-      <a class="active">
-        📊 Dashboard
-      </a>
-
-      <a>
-        📋 Enquiries
-      </a>
-
-      <a>
-        📈 Analytics
-      </a>
-
-    </nav>
-
-    <div class="sidebar-footer">
-
-      <button class="logout-btn" (click)="logout()">
-        🚪 Logout
-      </button>
-
-    </div>
-
-  </aside>
-
-  <!-- Overlay -->
-  <div
-    class="overlay"
-    *ngIf="sidebarOpen"
-    (click)="sidebarOpen = false">
   </div>
+
+  <nav>
+
+    <a class="active" (click)="sidebarOpen=false">
+      📋 Enquiries
+    </a>
+
+  </nav>
+
+  <div class="sidebar-footer">
+
+    <button class="logout-btn" (click)="logout()">
+      🚪 Logout
+    </button>
+
+  </div>
+
+</aside>
+
+<div class="overlay"
+     *ngIf="sidebarOpen"
+     (click)="sidebarOpen=false">
+</div>
 
   <!-- Main -->
   <main class="main">
