@@ -1,184 +1,178 @@
 <div class="dashboard" *ngIf="authenticated; else loginView">
 
-  <aside class="sidebar">
+  <!-- Mobile Header -->
+  <header class="topbar">
 
-    <div class="brand">
-      <div class="logo">🚗</div>
-      <div>
-        <h2>CarFixHub</h2>
-        <p>Admin Panel</p>
-      </div>
+    <div>
+      <h1>CarFixHub</h1>
+      <p>{{ enquiries.length }} Active Enquiries</p>
     </div>
 
-    <nav>
-      <a class="active">Dashboard</a>
-      <a>Enquiries</a>
-    </nav>
-
-    <button class="logout" (click)="logout()">
-      Logout
+    <button class="refresh-fab" (click)="loadQueries(true)">
+      ↻
     </button>
 
-  </aside>
+  </header>
 
-  <main class="main">
+  <!-- Hero -->
+  <section class="hero">
 
-    <div class="toast" *ngIf="toast">
-      {{ toast }}
+    <div>
+
+      <span class="tag">Admin Dashboard</span>
+
+      <h2>Manage Repair Requests</h2>
+
+      <p>Denting • Painting • Scratch Repair</p>
+
+      <div class="hero-actions">
+
+        <button class="primary" (click)="loadQueries(true)">
+          Refresh
+        </button>
+
+        <a routerLink="/" class="secondary">
+          Customer Site
+        </a>
+
+      </div>
+
     </div>
 
-    <section class="hero">
+    <AsyncImage query="blue sedan car isolated modern" aspectRatio="5:4"/>
 
-      <div>
+  </section>
 
-        <p class="welcome">Welcome back 👋</p>
+  <!-- Stats -->
+  <section class="stats">
 
-        <h1>Manage Repair Requests</h1>
+    <div class="stat">
+      <span>Total</span>
+      <h3>{{ enquiries.length }}</h3>
+    </div>
 
-        <p>Track customer enquiries for Denting, Painting and Scratch Repair.</p>
+    <div class="stat">
+      <span>Services</span>
+      <h3>3</h3>
+    </div>
 
-        <div class="hero-actions">
+    <div class="stat">
+      <span>Today</span>
+      <h3>{{ enquiries.length }}</h3>
+    </div>
 
-          <button class="primary" (click)="loadQueries(true)">
-            Refresh
-          </button>
+  </section>
 
-          <a routerLink="/" class="secondary">
-            Customer Website
-          </a>
+  <!-- Enquiry List -->
+  <section class="list">
 
-        </div>
+    <h2>Recent Enquiries</h2>
 
-      </div>
+    <div class="card" *ngFor="let enquiry of enquiries">
 
-      <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80">
+      <div class="card-header">
 
-    </section>
+        <div>
 
-    <section class="stats">
+          <h3>#{{ enquiry.id }}</h3>
 
-      <div class="stat-card">
-        <span>Total Enquiries</span>
-        <h2>{{ enquiries.length }}</h2>
-      </div>
-
-      <div class="stat-card">
-        <span>Today's Requests</span>
-        <h2>{{ enquiries.length }}</h2>
-      </div>
-
-      <div class="stat-card">
-        <span>Services</span>
-        <h2>3</h2>
-      </div>
-
-    </section>
-
-    <section class="list">
-
-      <div class="list-header">
-
-        <h2>Recent Enquiries</h2>
-
-        <button (click)="loadQueries(true)">Refresh</button>
-
-      </div>
-
-      <div class="enquiry-card" *ngFor="let enquiry of enquiries">
-
-        <div class="top">
-
-          <div>
-
-            <h3>Enquiry #{{ enquiry.id }}</h3>
-
-            <span>{{ formatDateTime(enquiry.createdAt) }}</span>
-
-          </div>
-
-          <span class="badge new">New</span>
+          <small>{{ formatDateTime(enquiry.createdAt) }}</small>
 
         </div>
 
-        <div class="grid">
+        <span class="new">NEW</span>
 
-          <div class="info">
+      </div>
 
-            <label>Car</label>
+      <div class="row">
+        <label>Car</label>
+        <strong>{{ enquiry.carModel }}</strong>
+      </div>
 
-            <strong>{{ enquiry.carModel }}</strong>
+      <div class="row">
+        <label>Service</label>
+        <span class="service">{{ enquiry.serviceType }}</span>
+      </div>
 
-          </div>
+      <div class="row">
+        <label>Mobile</label>
+        <strong>{{ enquiry.mobileNumber }}</strong>
+      </div>
 
-          <div class="info">
+      <details>
 
-            <label>Service</label>
+        <summary>View Details</summary>
 
-            <span class="service-tag">{{ enquiry.serviceType }}</span>
-
-          </div>
-
-          <div class="info">
-
-            <label>Mobile</label>
-
-            <strong>{{ enquiry.mobileNumber }}</strong>
-
-          </div>
-
-          <div class="info">
-
-            <label>Submitted</label>
-
-            <strong>{{ formatDateTime(enquiry.createdAt) }}</strong>
-
-          </div>
-
-        </div>
-
-        <div class="description">
-
-          <label>Description</label>
+        <div class="details-body">
 
           <p>{{ enquiry.description }}</p>
 
-        </div>
+          <div class="photos" *ngIf="photoUrls(enquiry).length">
 
-        <div class="photos" *ngIf="photoUrls(enquiry).length">
+            <img
+              *ngFor="let photo of photoUrls(enquiry)"
+              [src]="photo"
+              [alt]="'Photo '+enquiry.id"
+            >
 
-          <img
-            *ngFor="let photo of photoUrls(enquiry)"
-            [src]="photo"
-            [alt]="'Enquiry '+enquiry.id"
-          >
-
-        </div>
-
-        <div class="actions">
-
-          <button class="call" (click)="callCustomer(enquiry.mobileNumber)">
-            📞 Call Customer
-          </button>
-
-          <button class="delete" (click)="deleteQuery(enquiry)">
-            Delete
-          </button>
+          </div>
 
         </div>
+
+      </details>
+
+      <div class="actions">
+
+        <button class="call" (click)="callCustomer(enquiry.mobileNumber)">
+          📞 Call
+        </button>
+
+        <button class="delete" (click)="deleteQuery(enquiry)">
+          Delete
+        </button>
 
       </div>
 
-    </section>
+    </div>
 
-  </main>
+  </section>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+
+    <button class="active">
+      🏠
+      <span>Dashboard</span>
+    </button>
+
+    <button (click)="loadQueries(true)">
+      🔄
+      <span>Refresh</span>
+    </button>
+
+    <button routerLink="/">
+      🌐
+      <span>Website</span>
+    </button>
+
+    <button (click)="logout()">
+      🚪
+      <span>Logout</span>
+    </button>
+
+  </nav>
 
 </div>
 
+<!-- Login -->
+
 <ng-template #loginView>
 
-  <div class="login-page">
+  <div class="login">
 
     <div class="login-card">
+
+      <div class="login-logo">🚗</div>
 
       <h1>CarFixHub</h1>
 
@@ -188,7 +182,9 @@
 
       <input [(ngModel)]="password" type="password" placeholder="Password">
 
-      <button (click)="login()">Login</button>
+      <button (click)="login()">
+        Login
+      </button>
 
       <div class="error" *ngIf="loginError">
         {{ loginError }}
