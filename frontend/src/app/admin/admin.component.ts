@@ -160,6 +160,20 @@ export class AdminComponent implements OnInit, OnDestroy {
     }).format(date);
   }
 
+  downloadImage(url: string): void {
+  const link = document.createElement('a');
+  link.href = url;
+  link.target = '_blank';
+  link.rel = 'noopener';
+
+  const fileName = url.split('/').pop() || 'damage-photo.jpg';
+  link.download = fileName;
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  }
+
   photoUrls(q: Enquiry): string[] {
     return [q.photoUrl1, q.photoUrl2, q.photoUrl3].filter(Boolean);
   }
