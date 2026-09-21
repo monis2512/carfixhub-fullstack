@@ -1,30 +1,65 @@
 <div class="dashboard" *ngIf="authenticated; else loginView">
 
+  <!-- Mobile Header -->
+  <header class="topbar">
+
+    <button class="menu-btn" (click)="sidebarOpen=!sidebarOpen">
+      ☰
+    </button>
+
+    <div class="header-title">
+      <h1>CarFixHub</h1>
+      <p>{{ enquiries.length }} Active Enquiries</p>
+    </div>
+
+    <button class="refresh-fab" (click)="loadQueries(true)">
+      ↻
+    </button>
+
+  </header>
+
   <!-- Sidebar -->
-  <aside class="sidebar">
+  <aside class="sidebar" [class.open]="sidebarOpen">
 
     <div class="brand">
+
       <div class="logo">🚗</div>
+
       <div>
+
         <h2>CarFixHub</h2>
-        <p>Admin Panel</p>
+
+        <p>Admin Dashboard</p>
+
       </div>
+
     </div>
 
     <nav>
-      <a class="active">Dashboard</a>
-      <a>Enquiries</a>
+
+      <a class="active">
+        Dashboard
+      </a>
+
+      <a>
+        Enquiries
+      </a>
+
     </nav>
 
     <div class="sidebar-footer">
+
       <button class="logout-btn" (click)="logout()">
         🚪 Logout
       </button>
+
     </div>
 
   </aside>
 
-  <!-- Main Content -->
+  <div class="overlay" *ngIf="sidebarOpen" (click)="sidebarOpen=false"></div>
+
+  <!-- Main -->
   <main class="main">
 
     <div class="toast" *ngIf="toast">
@@ -32,15 +67,20 @@
     </div>
 
     <!-- Hero -->
+
     <section class="hero">
 
       <div class="hero-text">
 
-        <span class="tag">Welcome back 👋</span>
+        <span class="tag">
+          Welcome Back 👋
+        </span>
 
         <h1>Manage Repair Requests</h1>
 
-        <p>Track customer enquiries for Denting, Painting & Scratch Repair.</p>
+        <p>
+          Denting • Painting • Scratch Repair
+        </p>
 
         <div class="hero-actions">
 
@@ -63,29 +103,43 @@
     </section>
 
     <!-- Stats -->
+
     <section class="stats">
 
       <div class="stat-card">
+
         <div class="icon blue">📋</div>
-        <span>Total Enquiries</span>
+
+        <span>Total</span>
+
         <h2>{{ enquiries.length }}</h2>
+
       </div>
 
       <div class="stat-card">
+
         <div class="icon purple">📅</div>
-        <span>Today's Requests</span>
+
+        <span>Today</span>
+
         <h2>{{ enquiries.length }}</h2>
+
       </div>
 
       <div class="stat-card">
+
         <div class="icon green">🔧</div>
+
         <span>Services</span>
+
         <h2>3</h2>
+
       </div>
 
     </section>
 
-    <!-- Enquiry List -->
+    <!-- List -->
+
     <section class="list">
 
       <div class="list-header">
@@ -104,7 +158,7 @@
 
           <div>
 
-            <h3>Enquiry #{{ enquiry.id }}</h3>
+            <h3>#{{ enquiry.id }}</h3>
 
             <small>{{ formatDateTime(enquiry.createdAt) }}</small>
 
@@ -117,23 +171,35 @@
         <div class="info-grid">
 
           <div class="info-box">
+
             <label>Car</label>
+
             <strong>{{ enquiry.carModel }}</strong>
+
           </div>
 
           <div class="info-box">
+
             <label>Service</label>
+
             <span class="service-pill">{{ enquiry.serviceType }}</span>
+
           </div>
 
           <div class="info-box">
+
             <label>Mobile</label>
+
             <strong>{{ enquiry.mobileNumber }}</strong>
+
           </div>
 
           <div class="info-box">
+
             <label>Submitted</label>
+
             <strong>{{ formatDateTime(enquiry.createdAt) }}</strong>
+
           </div>
 
         </div>
@@ -147,35 +213,35 @@
         </div>
 
         <!-- Photos -->
+
         <div class="photos" *ngIf="photoUrls(enquiry).length">
 
-  <div class="photo-card" *ngFor="let photo of photoUrls(enquiry)">
+          <div
+            class="photo-card"
+            *ngFor="let photo of photoUrls(enquiry); let i=index">
 
-    <img [src]="photo" alt="Damage Photo">
+            <img
+              [src]="photo"
+              alt="Damage"
+              (click)="openLightbox(photoUrls(enquiry),i)">
 
-    <div class="photo-actions">
+            <div class="photo-actions">
 
-      <a
-        [href]="photo"
-        target="_blank"
-        class="photo-btn view">
-        👁 View
-      </a>
+              <button class="photo-btn view" (click)="openLightbox(photoUrls(enquiry),i)">
+                👁 View
+              </button>
 
-      <button
-        type="button"
-        class="photo-btn download"
-        (click)="downloadImage(photo)">
-        ⬇ Download
-      </button>
+              <button class="photo-btn download" (click)="downloadImage(photo)">
+                ⬇ Download
+              </button>
 
-    </div>
+            </div>
 
-  </div>
+          </div>
 
         </div>
 
-        <!-- Action Buttons -->
+        <!-- Buttons -->
 
         <div class="actions">
 
@@ -195,31 +261,60 @@
 
   </main>
 
+  <!-- Lightbox -->
+
+  <div class="lightbox" *ngIf="lightboxOpen">
+
+    <button class="close" (click)="closeLightbox()">
+      ✕
+    </button>
+
+    <button class="nav-btn left" (click)="prevImage()">
+      ‹
+    </button>
+
+    <img [src]="lightboxImages[currentImageIndex]">
+
+    <button class="nav-btn right" (click)="nextImage()">
+      ›
+    </button>
+
+    <div class="lightbox-bottom">
+
+      <button
+        class="download-lightbox"
+        (click)="downloadImage(lightboxImages[currentImageIndex])">
+
+        ⬇ Download Image
+
+      </button>
+
+    </div>
+
+  </div>
+
 </div>
 
-<!-- Login Screen -->
+<!-- Login -->
 
 <ng-template #loginView>
 
   <div class="login-page">
 
-    <!-- Left Hero -->
     <div class="login-hero">
 
       <span class="login-tag">CarFixHub Admin</span>
 
       <h1>Workshop Dashboard</h1>
 
-      <p>Manage customer repair requests for Denting, Painting and Scratch Repair.</p>
+      <p>Manage customer repair requests professionally.</p>
 
       <img
-  src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80"
-  alt="Car"
-  class="login-car">
+        class="login-car"
+        src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80">
 
     </div>
 
-    <!-- Login Card -->
     <div class="login-card">
 
       <div class="login-logo">🚗</div>
@@ -229,11 +324,15 @@
       <p class="login-subtitle">Sign in to continue</p>
 
       <div class="input-group">
+
         <label>Username</label>
-        <input [(ngModel)]="username" placeholder="Enter username">
+
+        <input [(ngModel)]="username" placeholder="Username">
+
       </div>
 
       <div class="input-group">
+
         <label>Password</label>
 
         <div class="password-wrapper">
@@ -241,7 +340,7 @@
           <input
             [(ngModel)]="password"
             [type]="showPassword ? 'text' : 'password'"
-            placeholder="Enter password">
+            placeholder="Password">
 
           <button
             type="button"
@@ -262,10 +361,6 @@
 
       <div class="error" *ngIf="loginError">
         {{ loginError }}
-      </div>
-
-      <div class="login-footer">
-        Secure Admin Access • CarFixHub
       </div>
 
     </div>
