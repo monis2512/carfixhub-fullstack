@@ -1,76 +1,171 @@
-<div class="page" *ngIf="!checkingSession">
-  <div class="toast" *ngIf="toast">{{ toast }}</div>
+<div class="dashboard">
 
-  <section class="login-card" *ngIf="!authenticated">
-    <a routerLink="/" class="back">← Customer Website</a>
-    <h1>Admin Login</h1>
-    <p class="muted">Shahrukh Auto Care</p>
-    <form (ngSubmit)="login()">
-      <label>Username</label>
-      <input [(ngModel)]="username" name="username" autocomplete="username">
-      <label>Password</label>
-      <input [(ngModel)]="password" name="password" type="password" autocomplete="current-password">
-      <div class="error" *ngIf="loginError">{{ loginError }}</div>
-      <button class="primary" type="submit">Login</button>
-    </form>
-  </section>
+  <!-- Sidebar -->
+  <aside class="sidebar">
 
-  <main class="dashboard" *ngIf="authenticated">
-    <header class="topbar">
+    <div class="brand">
+      <div class="logo">🚗</div>
       <div>
-        <h1>Shahrukh Auto Care</h1>
-        <p>Admin Dashboard</p>
+        <h2>CarFixHub</h2>
+        <p>Admin Panel</p>
       </div>
-      <div class="actions">
-        <a routerLink="/">Customer Website</a>
-        <button type="button" (click)="logout()">Logout</button>
-      </div>
-    </header>
+    </div>
 
-    <section class="summary">
-      <div class="summary-card"><span>Total Enquiries</span><strong>{{ enquiries.length }}</strong></div>
-      <button class="refresh" type="button" (click)="loadQueries(false)">Refresh</button>
+    <nav>
+
+      <a class="active">Dashboard</a>
+      <a>Enquiries</a>
+
+    </nav>
+
+    <button class="logout" (click)="logout()">
+      Logout
+    </button>
+
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- Hero -->
+    <section class="hero">
+
+      <div>
+
+        <p class="welcome">Welcome back 👋</p>
+
+        <h1>Manage Repair Requests</h1>
+
+        <p>Track customer enquiries for Denting, Painting and Scratch Repair.</p>
+
+        <div class="hero-actions">
+
+          <button class="primary" (click)="refresh()">
+            Refresh
+          </button>
+
+          <button class="secondary" (click)="goHome()">
+            Customer Website
+          </button>
+
+        </div>
+
+      </div>
+
+      <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80">
+
     </section>
 
-    <div class="empty" *ngIf="!enquiries.length">No enquiries yet.</div>
+    <!-- Stats -->
+    <section class="stats">
 
-    <article class="enquiry" *ngFor="let q of enquiries">
-      <div class="enquiry-head">
-        <div>
-          <h2>Enquiry #{{ q.id }} <span class="new-badge" *ngIf="q.id === enquiries[0]?.id">NEW</span></h2>
-          <div class="time">{{ formatDateTime(q.createdAt) }}</div>
-        </div>
+      <div class="stat-card">
+
+        <span>Total Enquiries</span>
+
+        <h2>{{ enquiries.length }}</h2>
+
       </div>
 
-      <div class="info-grid">
-        <div class="info-box"><span>Car</span><strong>{{ q.carModel }}</strong></div>
-        <div class="info-box"><span>Service</span><strong>{{ q.serviceType }}</strong></div>
-        <div class="info-box"><span>Mobile Number</span><strong>{{ q.mobileNumber }}</strong></div>
-        <div class="info-box"><span>Submitted</span><strong>{{ formatDateTime(q.createdAt) }}</strong></div>
+      <div class="stat-card">
+
+        <span>Today's Requests</span>
+
+        <h2>{{ enquiries.length }}</h2>
+
       </div>
 
-      <div class="description">
-        <span class="label">Customer Description</span>
-        <div class="description-text">{{ q.description }}</div>
+      <div class="stat-card">
+
+        <span>Services</span>
+
+        <h2>3</h2>
+
       </div>
 
-      <div class="damage-photos" *ngIf="photoUrls(q).length">
-        <span class="label">Damage Photos</span>
-        <div class="photo-grid">
-          <div class="photo-item" *ngFor="let url of photoUrls(q); let i = index">
-            <img [src]="url" [alt]="'Damage Photo ' + (i + 1)">
-            <div class="photo-actions">
-              <a class="view" [href]="url" target="_blank" rel="noopener">View</a>
-              <a class="download" [href]="downloadUrl(url)" target="_blank" rel="noopener">Download</a>
-            </div>
+    </section>
+
+    <!-- Enquiries -->
+    <section class="list">
+
+      <div class="list-header">
+
+        <h2>Recent Enquiries</h2>
+
+        <button (click)="refresh()">Refresh</button>
+
+      </div>
+
+      <div class="enquiry-card" *ngFor="let enquiry of enquiries">
+
+        <div class="top">
+
+          <div>
+
+            <h3>Enquiry #{{ enquiry.id }}</h3>
+
+            <span>{{ enquiry.createdAt | date:'dd/MM/yyyy, hh:mm a' }}</span>
+
           </div>
+
+          <span class="badge new">New</span>
+
         </div>
+
+        <div class="grid">
+
+          <div class="info">
+
+            <label>Car</label>
+
+            <strong>{{ enquiry.brand }} • {{ enquiry.model }}</strong>
+
+          </div>
+
+          <div class="info">
+
+            <label>Service</label>
+
+            <span class="service-tag">{{ enquiry.service }}</span>
+
+          </div>
+
+          <div class="info">
+
+            <label>Mobile</label>
+
+            <strong>{{ enquiry.mobile }}</strong>
+
+          </div>
+
+          <div class="info">
+
+            <label>Submitted</label>
+
+            <strong>{{ enquiry.createdAt | date:'dd/MM/yyyy, hh:mm a' }}</strong>
+
+          </div>
+
+        </div>
+
+        <div class="description">
+
+          <label>Description</label>
+
+          <p>{{ enquiry.description }}</p>
+
+        </div>
+
+        <div class="photos" *ngIf="enquiry.photoUrls?.length">
+
+          <img *ngFor="let photo of enquiry.photoUrls" [src]="photo">
+
+        </div>
+
       </div>
 
-      <div class="buttons">
-        <button class="call" type="button" (click)="callCustomer(q.mobileNumber)">📞 Call Customer</button>
-        <button class="delete" type="button" (click)="deleteQuery(q)">Delete</button>
-      </div>
-    </article>
+    </section>
+
   </main>
+
 </div>
