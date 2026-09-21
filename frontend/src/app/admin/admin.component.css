@@ -577,6 +577,15 @@ color:#64748b;
 font-size:13px;
 }
 
+.login-car{
+width:100%;
+max-width:420px;
+margin-top:30px;
+border-radius:20px;
+box-shadow:0 15px 35px rgba(37,99,235,.15);
+animation:float 5s ease-in-out infinite;
+}
+
 .error{
 margin-top:14px;
 padding:12px;
