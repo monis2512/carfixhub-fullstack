@@ -1,7 +1,6 @@
-# ---------- Frontend Build ----------
-FROM node:20 AS frontend-build
-
-WORKDIR /app
+# ---------- Angular build ----------
+FROM node:22-alpine AS frontend-build
+WORKDIR /frontend
 
 COPY frontend/package.json ./
 RUN npm install --legacy-peer-deps
@@ -9,18 +8,21 @@ RUN npm install --legacy-peer-deps
 COPY frontend/ ./
 RUN npm run build
 
-# ---------- Backend ----------
-FROM node:20
-
+# ---------- Spring Boot build ----------
+FROM maven:3.9.9-eclipse-temurin-17 AS backend-build
 WORKDIR /app
 
-COPY backend/package.json ./
-RUN npm install --legacy-peer-deps --omit=dev
+COPY backend/ ./backend/
+COPY --from=frontend-build /frontend/dist/carfixhub/browser/ ./backend/src/main/resources/static/
 
-COPY backend/ ./
+RUN mvn -f backend/pom.xml clean package -DskipTests
 
-COPY --from=frontend-build /app/dist ./public
+# ---------- Runtime ----------
+FROM eclipse-temurin:17-jre
+WORKDIR /app
+
+COPY --from=backend-build /app/backend/target/*.jar app.jar
 
 EXPOSE 10000
 
-CMD ["npm", "start"]
+ENTRYPOINT ["java","-jar","app.jar"]
