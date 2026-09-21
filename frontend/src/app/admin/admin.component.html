@@ -155,122 +155,118 @@
 
       </div>
 
-      <div class="enquiry-card" *ngFor="let enquiry of enquiries">
+      
+        <div class="enquiry-card" *ngFor="let enquiry of enquiries">
 
-        <div class="card-top">
+  <div class="accent"></div>
 
-          <div>
+  <div class="card-header">
 
-            <h3>#{{ enquiry.id }}</h3>
+    <div class="title-row">
 
-            <small>{{ formatDateTime(enquiry.createdAt) }}</small>
+      <div class="car-icon">🚗</div>
 
-          </div>
+      <div>
 
-          <span class="new-badge">NEW</span>
+        <h3>Enquiry #{{ enquiry.id }}</h3>
 
-        </div>
+        <span class="time-chip">
+          🕒 {{ formatDateTime(enquiry.createdAt) }}
+        </span>
 
-        <div class="info-grid">
-
-          <div class="info-box">
-
-            <label>Car</label>
-
-            <strong>{{ enquiry.carModel }}</strong>
-
-          </div>
-
-          <div class="info-box">
-
-            <label>Service</label>
-
-            <span class="service-pill">{{ enquiry.serviceType }}</span>
-
-          </div>
-
-          <div class="info-box">
-
-            <label>Mobile</label>
-
-            <strong>{{ enquiry.mobileNumber }}</strong>
-
-          </div>
-
-          <div class="info-box">
-
-            <label>Submitted</label>
-
-            <strong>{{ formatDateTime(enquiry.createdAt) }}</strong>
-
-          </div>
-
-        </div>
-
-        <div class="description">
-
-          <label>Description</label>
-
-          <p>{{ enquiry.description }}</p>
-
-        </div>
-
-        <!-- Photos -->
-
-        <div class="photos" *ngIf="photoUrls(enquiry).length">
-
-  <div
-    class="photo-card"
-    *ngFor="let photo of photoUrls(enquiry); let i=index">
-
-    <div class="photo-image">
-
-      <img
-        [src]="photo"
-        alt="Damage Photo"
-        (click)="openLightbox(photoUrls(enquiry),i)">
+      </div>
 
     </div>
 
-    <div class="photo-actions">
+    <span class="new-badge">NEW</span>
 
-      <button
-        class="photo-btn view"
-        (click)="openLightbox(photoUrls(enquiry),i)">
+  </div>
 
-        👁 View
+  <div class="info-grid">
 
-      </button>
+    <div class="info-box">
 
-      <button
-        class="photo-btn download"
-        (click)="downloadImage(photo)">
+      <label>Car</label>
 
-        ⬇ Download
+      <strong>{{ enquiry.carModel }}</strong>
 
-      </button>
+    </div>
+
+    <div class="info-box">
+
+      <label>Service</label>
+
+      <span class="service-pill">{{ enquiry.serviceType }}</span>
+
+    </div>
+
+    <div class="info-box">
+
+      <label>Customer</label>
+
+      <strong>{{ enquiry.mobileNumber }}</strong>
+
+    </div>
+
+    <div class="info-box">
+
+      <label>Submitted</label>
+
+      <strong>{{ formatDateTime(enquiry.createdAt) }}</strong>
 
     </div>
 
   </div>
 
-        </div>
+  <div class="description-box">
 
-        <!-- Buttons -->
+    <label>Damage Description</label>
 
-        <div class="actions">
+    <p>{{ enquiry.description }}</p>
 
-          <button class="call-btn" (click)="callCustomer(enquiry.mobileNumber)">
-            📞 Call Customer
-          </button>
+  </div>
 
-          <button class="delete-btn" (click)="deleteQuery(enquiry)">
-            🗑 Delete Enquiry
-          </button>
+  <div class="photos" *ngIf="photoUrls(enquiry).length">
 
-        </div>
+    <div class="photo-card"
+         *ngFor="let photo of photoUrls(enquiry); let i=index">
+
+      <img [src]="photo"
+           (click)="openLightbox(photoUrls(enquiry),i)">
+
+      <div class="photo-actions">
+
+        <button class="photo-btn view"
+                (click)="openLightbox(photoUrls(enquiry),i)">
+          👁 View
+        </button>
+
+        <button class="photo-btn download"
+                (click)="downloadImage(photo)">
+          ⬇ Download
+        </button>
 
       </div>
+
+    </div>
+
+  </div>
+
+  <div class="actions">
+
+    <button class="call-btn"
+            (click)="callCustomer(enquiry.mobileNumber)">
+      📞 Call Customer
+    </button>
+
+    <button class="delete-btn"
+            (click)="deleteQuery(enquiry)">
+      🗑 Delete
+    </button>
+
+  </div>
+
+</div>
 
     </section>
 
