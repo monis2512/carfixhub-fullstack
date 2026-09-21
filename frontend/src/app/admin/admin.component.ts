@@ -160,20 +160,6 @@ export class AdminComponent implements OnInit, OnDestroy {
     }).format(date);
   }
 
-  downloadImage(url: string): void {
-  const link = document.createElement('a');
-  link.href = url;
-  link.target = '_blank';
-  link.rel = 'noopener';
-
-  const fileName = url.split('/').pop() || 'damage-photo.jpg';
-  link.download = fileName;
-
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  }
-
   photoUrls(q: Enquiry): string[] {
     return [q.photoUrl1, q.photoUrl2, q.photoUrl3].filter(Boolean);
   }
@@ -181,6 +167,50 @@ export class AdminComponent implements OnInit, OnDestroy {
   downloadUrl(url: string): string {
     return url.includes('/upload/') ? url.replace('/upload/', '/upload/fl_attachment/') : url;
   }
+
+  // Mobile sidebar
+sidebarOpen = false;
+
+// Image viewer
+lightboxOpen = false;
+lightboxImages: string[] = [];
+currentImageIndex = 0;
+
+// Open image viewer
+openLightbox(images: string[], index: number): void {
+  this.lightboxImages = images;
+  this.currentImageIndex = index;
+  this.lightboxOpen = true;
+}
+
+// Close image viewer
+closeLightbox(): void {
+  this.lightboxOpen = false;
+}
+
+// Next image
+nextImage(): void {
+  this.currentImageIndex =
+    (this.currentImageIndex + 1) % this.lightboxImages.length;
+}
+
+// Previous image
+prevImage(): void {
+  this.currentImageIndex =
+    (this.currentImageIndex - 1 + this.lightboxImages.length) %
+    this.lightboxImages.length;
+}
+
+// Download image
+downloadImage(url: string): void {
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = url.split('/').pop() || 'damage-photo.jpg';
+  link.target = '_blank';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 
   ngOnDestroy(): void {
     this.poll?.unsubscribe();
