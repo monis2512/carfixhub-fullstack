@@ -1,6 +1,6 @@
 export const APP_CONFIG = {
-  cloudinaryCloudName: 'YOUR_CLOUD_NAME',
-  cloudinaryUploadPreset: 'YOUR_UPLOAD_PRESET',
+  cloudinaryCloudName: 'bpa6y6ke',
+  cloudinaryUploadPreset: 'carfixhub_upload',
   cloudinaryFolder: 'carfixhub/enquiries',
   maxPhotos: 3,
   maxPhotoSizeBytes: 5 * 1024 * 1024
