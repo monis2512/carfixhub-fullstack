@@ -224,6 +224,18 @@ downloadImage(url: string): void {
     });
 }
 
+  scrollToEnquiries(): void {
+  this.sidebarOpen = false;
+
+  setTimeout(() => {
+    const section = document.getElementById('enquiries');
+    section?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }, 250); // Wait for sidebar to close
+}
+
   ngOnDestroy(): void {
     this.poll?.unsubscribe();
   }
