@@ -60,7 +60,7 @@ export class HomeComponent {
     { value: 'Denting', label: '🔨 Denting' },
     { value: 'Painting', label: '🎨 Painting' },
     { value: 'Scratch Repair', label: '✨ Scratch Repair' },
-    { value: 'Denting & Painting', label: '🚗 Both' }
+    { value: 'Denting & Painting', label: '🚗 All' }
   ];
 
   brand = '';
