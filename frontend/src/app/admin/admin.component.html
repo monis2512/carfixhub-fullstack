@@ -149,23 +149,29 @@
         <!-- Photos -->
         <div class="photos" *ngIf="photoUrls(enquiry).length">
 
-          <div class="photo-card" *ngFor="let photo of photoUrls(enquiry)">
+  <div class="photo-card" *ngFor="let photo of photoUrls(enquiry)">
 
-            <img [src]="photo" alt="Damage Photo">
+    <img [src]="photo" alt="Damage Photo">
 
-            <div class="photo-actions">
+    <div class="photo-actions">
 
-              <a [href]="photo" target="_blank" class="photo-btn view">
-                👁 View
-              </a>
+      <a
+        [href]="photo"
+        target="_blank"
+        class="photo-btn view">
+        👁 View
+      </a>
 
-              <a [href]="photo" download class="photo-btn download">
-                ⬇ Download
-              </a>
+      <button
+        type="button"
+        class="photo-btn download"
+        (click)="downloadImage(photo)">
+        ⬇ Download
+      </button>
 
-            </div>
+    </div>
 
-          </div>
+  </div>
 
         </div>
 
