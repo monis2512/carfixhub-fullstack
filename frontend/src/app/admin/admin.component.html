@@ -1,9 +1,9 @@
 <div class="dashboard" *ngIf="authenticated; else loginView">
 
-  <!-- Mobile Header -->
+  <!-- Top Header -->
   <header class="topbar">
 
-    <button class="menu-btn" (click)="sidebarOpen=!sidebarOpen">
+    <button class="menu-btn" (click)="sidebarOpen = !sidebarOpen">
       ☰
     </button>
 
@@ -13,7 +13,7 @@
     </div>
 
     <button class="refresh-fab" (click)="loadQueries(true)">
-      ↻
+      🔄
     </button>
 
   </header>
@@ -38,11 +38,15 @@
     <nav>
 
       <a class="active">
-        Dashboard
+        📊 Dashboard
       </a>
 
       <a>
-        Enquiries
+        📋 Enquiries
+      </a>
+
+      <a>
+        📈 Analytics
       </a>
 
     </nav>
@@ -57,7 +61,12 @@
 
   </aside>
 
-  <div class="overlay" *ngIf="sidebarOpen" (click)="sidebarOpen=false"></div>
+  <!-- Overlay -->
+  <div
+    class="overlay"
+    *ngIf="sidebarOpen"
+    (click)="sidebarOpen = false">
+  </div>
 
   <!-- Main -->
   <main class="main">
