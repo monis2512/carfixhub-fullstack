@@ -1,65 +1,213 @@
 <a class="admin-login" routerLink="/admin">Admin Login</a>
 
 <section class="hero">
-  <h1>CarFixHub</h1>
-  <p>Denting • Painting • Scratch Repair<br>Tell us what needs to be fixed.</p>
+
+  <div class="hero-content">
+
+    <div class="hero-text">
+
+      <span class="tag">
+        Professional Denting • Painting • Scratch Repair
+      </span>
+
+      <h1>Restore Your Car's Finish</h1>
+
+      <p>
+        Quick repair requests, quality workmanship and trusted service for
+        dents, scratches and paint damage.
+      </p>
+
+      <div class="hero-buttons">
+
+        <a href="#repairForm" class="btn-primary">
+          Request Repair
+        </a>
+
+        <a href="#services" class="btn-secondary">
+          View Services
+        </a>
+
+      </div>
+
+      <div class="trust">
+
+        <span>✓ Trusted Workshop</span>
+        <span>✓ Skilled Technicians</span>
+        <span>✓ Quality Finish</span>
+
+      </div>
+
+    </div>
+
+    <div class="hero-image">
+      <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80" alt="Car Repair">
+    </div>
+
+  </div>
+
+</section>
+
+<section class="services-section" id="services">
+
+  <h2>What We Do</h2>
+
+  <div class="service-grid">
+
+    <div class="service-card">
+      <div class="icon">🔨</div>
+      <h3>Denting</h3>
+      <p>Restore your car's original shape with precision repairs.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="icon">🎨</div>
+      <h3>Painting</h3>
+      <p>Professional paint matching for a factory-like finish.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="icon">✨</div>
+      <h3>Scratch Repair</h3>
+      <p>Remove scratches and restore a clean appearance.</p>
+    </div>
+
+  </div>
+
 </section>
 
 <div class="wrap">
-  <div class="card">
-    <h2>Get a Repair Enquiry</h2>
-    <div id="status" class="status" [class.error]="status && !statusOk" [class.success]="statusOk">{{ status }}</div>
 
-    <div class="field" id="brand">
-      <label>Car Brand</label>
-      <select [(ngModel)]="brand" (ngModelChange)="onBrandChange()">
-        <option value="">Choose car brand</option>
-        <option *ngFor="let item of brands" [value]="item">{{ item }}</option>
-      </select>
-    </div>
+  <div class="card" id="repairForm">
 
-    <div class="field" id="model">
-      <label>Car Model</label>
-      <select [(ngModel)]="model" [disabled]="!brand">
-        <option value="">{{ brand ? 'Choose car model' : 'First choose car brand' }}</option>
-        <option *ngFor="let item of (brand ? carModels[brand] : [])" [value]="item">{{ item }}</option>
-      </select>
-    </div>
+    <h2>Request a Repair</h2>
 
-    <div class="field" id="service">
-      <label>Service Required</label>
-      <div class="services">
-        <button type="button" class="service" *ngFor="let item of services" [class.active]="service === item.value" (click)="selectService(item.value)">{{ item.label }}</button>
-      </div>
-    </div>
-
-    <div class="field" id="mobile">
-      <label>Mobile Number *</label>
-      <input [(ngModel)]="mobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number">
-    </div>
-
-    <div class="field" id="description">
-      <label>Describe the damage *</label>
-      <textarea [(ngModel)]="description" maxlength="1000" placeholder="Example: Front bumper has a dent..."></textarea>
-      <div class="counter">{{ description.length }}/1000</div>
+    <div id="status" class="status" [class.error]="status && !statusOk" [class.success]="statusOk">
+      {{ status }}
     </div>
 
     <div class="field">
-      <label>Damage Photos (Optional)</label>
-      <input id="photo" type="file" accept="image/jpeg,image/png,image/webp" multiple (change)="onFilesSelected($event)">
-      <div class="photo-note">You can upload a maximum of 3 pictures. Maximum 5 MB per picture.</div>
-      <div class="photo-preview" *ngIf="previewUrls.length">
-        <img *ngFor="let url of previewUrls" [src]="url" alt="Selected damage photo">
-      </div>
+      <label>Car Brand</label>
+
+      <select [(ngModel)]="brand" (ngModelChange)="onBrandChange()">
+
+        <option value="">Choose car brand</option>
+
+        <option *ngFor="let item of brands" [value]="item">
+          {{ item }}
+        </option>
+
+      </select>
+
     </div>
 
-    <button class="submit" type="button" [disabled]="sending" (click)="submit()">{{ uploadText }}</button>
+    <div class="field">
+
+      <label>Car Model</label>
+
+      <select [(ngModel)]="model" [disabled]="!brand">
+
+        <option value="">
+          {{ brand ? 'Choose car model' : 'First choose car brand' }}
+        </option>
+
+        <option *ngFor="let item of (brand ? carModels[brand] : [])" [value]="item">
+          {{ item }}
+        </option>
+
+      </select>
+
+    </div>
+
+    <div class="field">
+
+      <label>Service Required</label>
+
+      <div class="services">
+
+        <button
+          type="button"
+          class="service"
+          *ngFor="let item of services"
+          [class.active]="service===item.value"
+          (click)="selectService(item.value)"
+        >
+          {{ item.label }}
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="field">
+
+      <label>Mobile Number *</label>
+
+      <input
+        [(ngModel)]="mobile"
+        type="tel"
+        maxlength="10"
+        placeholder="10-digit mobile number"
+      >
+
+    </div>
+
+    <div class="field">
+
+      <label>Describe the damage *</label>
+
+      <textarea
+        [(ngModel)]="description"
+        maxlength="1000"
+        placeholder="Example: Front bumper has a dent..."
+      ></textarea>
+
+      <div class="counter">
+        {{ description.length }}/1000
+      </div>
+
+    </div>
+
+    <div class="field">
+
+      <label>Damage Photos (Optional)</label>
+
+      <input
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        multiple
+        (change)="onFilesSelected($event)"
+      >
+
+      <div class="photo-note">
+        Maximum 3 photos • 5 MB each
+      </div>
+
+      <div class="photo-preview" *ngIf="previewUrls.length">
+
+        <img *ngFor="let url of previewUrls" [src]="url">
+
+      </div>
+
+    </div>
+
+    <button class="submit" [disabled]="sending" (click)="submit()">
+      {{ uploadText }}
+    </button>
 
     <div class="contact">
+
       <a href="tel:+918979111277">📞 Call</a>
-      <a href="https://wa.me/918979111277" target="_blank" rel="noopener">💬 WhatsApp</a>
+
+      <a href="https://wa.me/918979111277" target="_blank">
+        💬 WhatsApp
+      </a>
+
     </div>
 
-    <p class="address">Khanalampura, opposite Dr Shamshad, Saharanpur - 247001</p>
+    <p class="address">
+      Khanalampura, opposite Dr Shamshad, Saharanpur - 247001
+    </p>
+
   </div>
+
 </div>
