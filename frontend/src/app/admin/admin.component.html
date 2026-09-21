@@ -1,6 +1,5 @@
-<div class="dashboard">
+<div class="dashboard" *ngIf="authenticated; else loginView">
 
-  <!-- Sidebar -->
   <aside class="sidebar">
 
     <div class="brand">
@@ -12,10 +11,8 @@
     </div>
 
     <nav>
-
       <a class="active">Dashboard</a>
       <a>Enquiries</a>
-
     </nav>
 
     <button class="logout" (click)="logout()">
@@ -24,10 +21,12 @@
 
   </aside>
 
-  <!-- Main -->
   <main class="main">
 
-    <!-- Hero -->
+    <div class="toast" *ngIf="toast">
+      {{ toast }}
+    </div>
+
     <section class="hero">
 
       <div>
@@ -40,13 +39,13 @@
 
         <div class="hero-actions">
 
-          <button class="primary" (click)="refresh()">
+          <button class="primary" (click)="loadQueries(true)">
             Refresh
           </button>
 
-          <button class="secondary" (click)="goHome()">
+          <a routerLink="/" class="secondary">
             Customer Website
-          </button>
+          </a>
 
         </div>
 
@@ -56,43 +55,32 @@
 
     </section>
 
-    <!-- Stats -->
     <section class="stats">
 
       <div class="stat-card">
-
         <span>Total Enquiries</span>
-
         <h2>{{ enquiries.length }}</h2>
-
       </div>
 
       <div class="stat-card">
-
         <span>Today's Requests</span>
-
         <h2>{{ enquiries.length }}</h2>
-
       </div>
 
       <div class="stat-card">
-
         <span>Services</span>
-
         <h2>3</h2>
-
       </div>
 
     </section>
 
-    <!-- Enquiries -->
     <section class="list">
 
       <div class="list-header">
 
         <h2>Recent Enquiries</h2>
 
-        <button (click)="refresh()">Refresh</button>
+        <button (click)="loadQueries(true)">Refresh</button>
 
       </div>
 
@@ -104,7 +92,7 @@
 
             <h3>Enquiry #{{ enquiry.id }}</h3>
 
-            <span>{{ enquiry.createdAt | date:'dd/MM/yyyy, hh:mm a' }}</span>
+            <span>{{ formatDateTime(enquiry.createdAt) }}</span>
 
           </div>
 
@@ -118,7 +106,7 @@
 
             <label>Car</label>
 
-            <strong>{{ enquiry.brand }} • {{ enquiry.model }}</strong>
+            <strong>{{ enquiry.carModel }}</strong>
 
           </div>
 
@@ -126,7 +114,7 @@
 
             <label>Service</label>
 
-            <span class="service-tag">{{ enquiry.service }}</span>
+            <span class="service-tag">{{ enquiry.serviceType }}</span>
 
           </div>
 
@@ -134,7 +122,7 @@
 
             <label>Mobile</label>
 
-            <strong>{{ enquiry.mobile }}</strong>
+            <strong>{{ enquiry.mobileNumber }}</strong>
 
           </div>
 
@@ -142,7 +130,7 @@
 
             <label>Submitted</label>
 
-            <strong>{{ enquiry.createdAt | date:'dd/MM/yyyy, hh:mm a' }}</strong>
+            <strong>{{ formatDateTime(enquiry.createdAt) }}</strong>
 
           </div>
 
@@ -156,9 +144,25 @@
 
         </div>
 
-        <div class="photos" *ngIf="enquiry.photoUrls?.length">
+        <div class="photos" *ngIf="photoUrls(enquiry).length">
 
-          <img *ngFor="let photo of enquiry.photoUrls" [src]="photo">
+          <img
+            *ngFor="let photo of photoUrls(enquiry)"
+            [src]="photo"
+            [alt]="'Enquiry '+enquiry.id"
+          >
+
+        </div>
+
+        <div class="actions">
+
+          <button class="call" (click)="callCustomer(enquiry.mobileNumber)">
+            📞 Call Customer
+          </button>
+
+          <button class="delete" (click)="deleteQuery(enquiry)">
+            Delete
+          </button>
 
         </div>
 
@@ -169,3 +173,29 @@
   </main>
 
 </div>
+
+<ng-template #loginView>
+
+  <div class="login-page">
+
+    <div class="login-card">
+
+      <h1>CarFixHub</h1>
+
+      <p>Admin Login</p>
+
+      <input [(ngModel)]="username" placeholder="Username">
+
+      <input [(ngModel)]="password" type="password" placeholder="Password">
+
+      <button (click)="login()">Login</button>
+
+      <div class="error" *ngIf="loginError">
+        {{ loginError }}
+      </div>
+
+    </div>
+
+  </div>
+
+</ng-template>
