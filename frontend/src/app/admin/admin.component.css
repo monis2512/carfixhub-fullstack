@@ -30,17 +30,17 @@
   box-shadow: 8px 0 24px rgba(15, 23, 42, .15);
 }
 
-.sidebar-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 32px;
+.sidebar-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:16px;
+  margin-bottom:32px;
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.brand{
+  flex:1;
+  min-width:0;
 }
 
 .logo {
@@ -66,20 +66,21 @@
   font-size: 12px;
 }
 
-.close-menu {
-  width: 36px;
-  height: 36px;
-  border: none;
-  border-radius: 10px;
-  background: rgba(255,255,255,.12);
-  color: white;
-  font-size: 18px;
-  cursor: pointer;
-  transition: .25s;
+.close-menu{
+  width:40px;
+  height:40px;
+  flex-shrink:0;
+  border:none;
+  border-radius:12px;
+  background:rgba(255,255,255,.12);
+  color:white;
+  font-size:20px;
+  cursor:pointer;
+  transition:.25s;
 }
 
-.close-menu:hover {
-  background: rgba(255,255,255,.22);
+.close-menu:hover{
+  background:rgba(255,255,255,.22);
 }
 
 nav {
