@@ -197,22 +197,66 @@
 
   <div class="login-page">
 
+    <!-- Left Hero -->
+    <div class="login-hero">
+
+      <span class="login-tag">CarFixHub Admin</span>
+
+      <h1>Workshop Dashboard</h1>
+
+      <p>Manage customer repair requests for Denting, Painting and Scratch Repair.</p>
+
+      <AsyncImage query="blue sedan car isolated modern" aspectRatio="5:4"/>
+
+    </div>
+
+    <!-- Login Card -->
     <div class="login-card">
 
       <div class="login-logo">🚗</div>
 
-      <h1>CarFixHub</h1>
+      <h2>Welcome Back</h2>
 
-      <p>Admin Login</p>
+      <p class="login-subtitle">Sign in to continue</p>
 
-      <input [(ngModel)]="username" placeholder="Username">
+      <div class="input-group">
+        <label>Username</label>
+        <input [(ngModel)]="username" placeholder="Enter username">
+      </div>
 
-      <input [(ngModel)]="password" type="password" placeholder="Password">
+      <div class="input-group">
+        <label>Password</label>
 
-      <button (click)="login()">Login</button>
+        <div class="password-wrapper">
+
+          <input
+            [(ngModel)]="password"
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="Enter password">
+
+          <button
+            type="button"
+            class="toggle-password"
+            (click)="showPassword=!showPassword">
+
+            {{ showPassword ? '🙈' : '👁' }}
+
+          </button>
+
+        </div>
+
+      </div>
+
+      <button class="login-btn" (click)="login()">
+        Login →
+      </button>
 
       <div class="error" *ngIf="loginError">
         {{ loginError }}
+      </div>
+
+      <div class="login-footer">
+        Secure Admin Access • CarFixHub
       </div>
 
     </div>
