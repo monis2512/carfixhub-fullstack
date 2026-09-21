@@ -216,28 +216,40 @@
 
         <div class="photos" *ngIf="photoUrls(enquiry).length">
 
-          <div
-            class="photo-card"
-            *ngFor="let photo of photoUrls(enquiry); let i=index">
+  <div
+    class="photo-card"
+    *ngFor="let photo of photoUrls(enquiry); let i=index">
 
-            <img
-              [src]="photo"
-              alt="Damage"
-              (click)="openLightbox(photoUrls(enquiry),i)">
+    <div class="photo-image">
 
-            <div class="photo-actions">
+      <img
+        [src]="photo"
+        alt="Damage Photo"
+        (click)="openLightbox(photoUrls(enquiry),i)">
 
-              <button class="photo-btn view" (click)="openLightbox(photoUrls(enquiry),i)">
-                👁 View
-              </button>
+    </div>
 
-              <button class="photo-btn download" (click)="downloadImage(photo)">
-                ⬇ Download
-              </button>
+    <div class="photo-actions">
 
-            </div>
+      <button
+        class="photo-btn view"
+        (click)="openLightbox(photoUrls(enquiry),i)">
 
-          </div>
+        👁 View
+
+      </button>
+
+      <button
+        class="photo-btn download"
+        (click)="downloadImage(photo)">
+
+        ⬇ Download
+
+      </button>
+
+    </div>
+
+  </div>
 
         </div>
 
