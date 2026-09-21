@@ -203,13 +203,24 @@ prevImage(): void {
 
 // Download image
 downloadImage(url: string): void {
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = url.split('/').pop() || 'damage-photo.jpg';
-  link.target = '_blank';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  fetch(url)
+    .then(res => res.blob())
+    .then(blob => {
+      const blobUrl = URL.createObjectURL(blob);
+
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = `damage-photo-${Date.now()}.jpg`;
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      URL.revokeObjectURL(blobUrl);
+    })
+    .catch(() => {
+      window.open(url, '_blank');
+    });
 }
 
   ngOnDestroy(): void {
