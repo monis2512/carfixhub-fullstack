@@ -1480,3 +1480,6 @@ body {
     max-width: 100%;
     overflow-x: hidden;
 }
+
+/* SINGLE CRM TABLE */
+.crm-table{width:1100px;min-width:1100px;border-collapse:collapse;background:#fff}.crm-table th{background:#eff6ff;color:#64748b;padding:16px;text-align:left;font-size:13px;font-weight:700;border-bottom:1px solid #dbeafe}.crm-table td{padding:18px 16px;border-bottom:1px solid #eef2f7;vertical-align:top}.table-scroll{width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;padding-bottom:12px;scrollbar-width:thin;scrollbar-color:#2563eb #dbeafe}.table-scroll::-webkit-scrollbar{height:8px}.table-scroll::-webkit-scrollbar-track{background:#dbeafe;border-radius:999px}.table-scroll::-webkit-scrollbar-thumb{background:#2563eb;border-radius:999px}.table-actions{display:flex;flex-direction:column;gap:8px;min-width:120px}.call-btn.mini,.delete-btn.mini{padding:10px;border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600}.call-btn.mini{background:linear-gradient(135deg,#22c55e,#16a34a)}.delete-btn.mini{background:linear-gradient(135deg,#ef4444,#dc2626)}
