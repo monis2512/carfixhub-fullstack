@@ -1203,21 +1203,50 @@ nav a:hover {
         z-index: 1150;
     }
 
-    .sidebar-top {
+   /* .sidebar-top {
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 16px;
         margin-bottom: 28px;
-    }
+    }*/
 
-    .brand {
+    .sidebar-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:18px;
+  margin-bottom:30px;
+}
+
+  /*  .brand {
         display: flex;
         align-items: center;
         gap: 14px;
         flex: 1;
         min-width: 0;
-    }
+    }*/
+
+    .brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  flex:1;
+  min-width:0;
+}
+
+.brand h2{
+  margin:0;
+  font-size:26px;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.brand p{
+  margin:3px 0 0;
+  font-size:13px;
+  color:#cbd5e1;
+}
 
     .logo {
         width: 56px;
@@ -1226,16 +1255,16 @@ nav a:hover {
         flex-shrink: 0;
     }
 
-    .brand h2 {
+   /* .brand h2 {
         font-size: 28px;
         margin: 0;
     }
 
     .brand p {
         font-size: 13px;
-    }
+    }*/
 
-    .close-menu {
+  /*  .close-menu {
         width: 42px;
         height: 42px;
         border: none;
@@ -1245,7 +1274,23 @@ nav a:hover {
         font-size: 22px;
         cursor: pointer;
         flex-shrink: 0;
-    }
+    }*/
+
+    .close-menu{
+  width:40px;
+  height:40px;
+  min-width:40px;
+  border:none;
+  border-radius:12px;
+  background:rgba(255,255,255,.12);
+  color:white;
+  font-size:24px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
 
     .hero {
         width: 100%;
