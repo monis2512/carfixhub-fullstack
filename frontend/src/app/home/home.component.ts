@@ -11,7 +11,7 @@ import { HeroAnimationComponent } from '../hero-animation/hero-animation.compone
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink,HeroAnimationComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
