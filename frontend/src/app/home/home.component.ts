@@ -201,4 +201,19 @@ export class HomeComponent {
     for (const url of this.previewUrls) URL.revokeObjectURL(url);
     this.previewUrls = [];
   }
+
+scrollToForm() {
+  document.getElementById('enquiry-form')?.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  });
+}
+
+scrollToServices() {
+  document.getElementById('services')?.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  });
+}
+  
 }
