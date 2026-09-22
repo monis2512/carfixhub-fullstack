@@ -147,7 +147,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.authenticated = false;
     this.enquiries = [];
     this.knownIds.clear();
-    window.location.href = '/';
+    window.location.href = '/admin';
   }
 
   formatDateTime(value: string): string {
