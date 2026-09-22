@@ -172,186 +172,104 @@
 
 </div>
       
-        <div class="enquiry-card" *ngFor="let enquiry of paginatedEnquiries">
+      <div class="enquiry-table-card">
 
-  <div class="accent"></div>
+  <div class="table-scroll">
 
-  <div class="card-header">
+    <table class="crm-table">
 
-    <div class="title-row">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Car</th>
+          <th>Service</th>
+          <th>Customer</th>
+          <th>Damage</th>
+          <th>Photos</th>
+          <th>Action</th>
+        </tr>
+      </thead>
 
-      <div class="car-icon">🚗</div>
+      <tbody>
 
-      <div>
+        <tr *ngFor="let enquiry of paginatedEnquiries">
 
-        <h3>Enquiry #{{ enquiry.id }}</h3>
+          <td>
+            <strong>#{{ enquiry.id }}</strong><br>
+            <small>{{ formatDateTime(enquiry.createdAt) }}</small>
+          </td>
 
-        <span class="time-chip">
-          🕒 {{ formatDateTime(enquiry.createdAt) }}
-        </span>
+          <td>{{ enquiry.carModel }}</td>
 
-      </div>
+          <td>
+            <span class="service-pill">
+              {{ enquiry.serviceType }}
+            </span>
+          </td>
 
-    </div>
+          <td>{{ enquiry.mobileNumber }}</td>
 
-    <span class="new-badge">NEW</span>
+          <td class="damage-cell">
+            {{ enquiry.description }}
+          </td>
+
+          <td>
+
+            <div class="photo-cell">
+
+              <div
+                class="mini-photo"
+                *ngFor="let photo of photoUrls(enquiry); let i=index">
+
+                <img
+                  [src]="photo"
+                  (click)="openLightbox(photoUrls(enquiry),i)">
+
+                <button
+                  class="mini-view"
+                  (click)="openLightbox(photoUrls(enquiry),i)">
+                  View
+                </button>
+
+                <button
+                  class="mini-download"
+                  (click)="downloadImage(photo)">
+                  Download
+                </button>
+
+              </div>
+
+            </div>
+
+          </td>
+
+          <td>
+
+            <div class="table-actions">
+
+              <button
+                class="call-btn mini"
+                (click)="callCustomer(enquiry.mobileNumber)">
+                📞 Call
+              </button>
+
+              <button
+                class="delete-btn mini"
+                (click)="deleteQuery(enquiry)">
+                🗑 Delete
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
 
   </div>
-
-<!--  <div class="info-grid">
-
-    <div class="info-box">
-
-      <label>Car</label>
-
-      <strong>{{ enquiry.carModel }}</strong>
-
-    </div>
-
-    <div class="info-box">
-
-      <label>Service</label>
-
-      <span class="service-pill">{{ enquiry.serviceType }}</span>
-
-    </div>
-
-    <div class="info-box">
-
-      <label>Customer</label>
-
-      <strong>{{ enquiry.mobileNumber }}</strong>
-
-    </div>
-
-  </div>
-
-  <div class="description-box">
-
-    <label>Damage Description</label>
-
-    <p>{{ enquiry.description }}</p>
-
-  </div>
-
-  <div class="photos" *ngIf="photoUrls(enquiry).length">
-
-    <div class="photo-card"
-         *ngFor="let photo of photoUrls(enquiry); let i=index">
-
-      <img [src]="photo"
-           (click)="openLightbox(photoUrls(enquiry),i)">
-
-      <div class="photo-actions">
-
-        <button class="photo-btn view"
-                (click)="openLightbox(photoUrls(enquiry),i)">
-          👁 View
-        </button>
-
-        <button class="photo-btn download"
-                (click)="downloadImage(photo)">
-          ⬇ Download
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="actions">
-
-    <button class="call-btn"
-            (click)="callCustomer(enquiry.mobileNumber)">
-      📞 Call Customer
-    </button>
-
-    <button class="delete-btn"
-            (click)="deleteQuery(enquiry)">
-      🗑 Delete
-    </button>
-
-  </div>-->
-
-          <div class="table-scroll">
-
-  <div class="details-table">
-
-    <div class="table-header">
-      <span>Car</span>
-      <span>Service</span>
-      <span>Customer</span>
-      <span>Damage</span>
-      <span>Photos</span>
-      <span>Action</span>
-    </div>
-
-    <div class="table-row">
-
-      <div>{{ enquiry.carModel }}</div>
-
-      <div>
-        <span class="service-pill">{{ enquiry.serviceType }}</span>
-      </div>
-
-      <div>{{ enquiry.mobileNumber }}</div>
-
-      <div class="damage-cell">
-        {{ enquiry.description }}
-      </div>
-
-      <div class="photo-cell">
-
-        <div
-          class="mini-photo"
-          *ngFor="let photo of photoUrls(enquiry); let i=index">
-
-          <img
-            [src]="photo"
-            (click)="openLightbox(photoUrls(enquiry),i)">
-
-          <div class="mini-photo-actions">
-
-            <button
-              class="mini-view"
-              (click)="openLightbox(photoUrls(enquiry),i)">
-              View
-            </button>
-
-            <button
-              class="mini-download"
-              (click)="downloadImage(photo)">
-              Download
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="table-actions">
-
-        <button
-          class="call-btn mini"
-          (click)="callCustomer(enquiry.mobileNumber)">
-          📞 Call
-        </button>
-
-        <button
-          class="delete-btn mini"
-          (click)="deleteQuery(enquiry)">
-          🗑 Delete
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
 
 </div>
 
