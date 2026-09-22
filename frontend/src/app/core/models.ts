@@ -3,6 +3,7 @@ export interface Enquiry {
   carModel: string;
   serviceType: string;
   description: string;
+  customerName:string;
   mobileNumber: string;
   photoName: string;
   photoUrl1: string;
@@ -15,6 +16,7 @@ export interface CreateQueryRequest {
   carModel: string;
   serviceType: string;
   description: string;
+  customerName:string;
   mobileNumber: string;
   photoName: string;
   photoUrl1: string;
