@@ -4,6 +4,7 @@ public class CreateQueryRequest {
     private String carModel;
     private String serviceType;
     private String description;
+    private String customerName;
     private String mobileNumber;
     private String photoName;
     private String photoUrl1;
@@ -16,6 +17,10 @@ public class CreateQueryRequest {
     public void setServiceType(String value) { this.serviceType = value; }
     public String getDescription() { return description; }
     public void setDescription(String value) { this.description = value; }
+
+public String getCustomerName() { return customerName; }
+    public void setCustomerName(String value) { this.customerName = value; }
+    
     public String getMobileNumber() { return mobileNumber; }
     public void setMobileNumber(String value) { this.mobileNumber = value; }
     public String getPhotoName() { return photoName; }
