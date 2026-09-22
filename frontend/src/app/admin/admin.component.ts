@@ -246,7 +246,8 @@ itemsPerPage = 5;
 
   const filtered = this.enquiries.filter(enquiry =>
     (enquiry.carModel || '').toLowerCase().includes(term) ||
-    (enquiry.mobileNumber || '').toLowerCase().includes(term)
+    (enquiry.mobileNumber || '').toLowerCase().includes(term) ||
+    (enquiry.customerName || '').toLowerCase().includes(term)
   );
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / this.itemsPerPage));
