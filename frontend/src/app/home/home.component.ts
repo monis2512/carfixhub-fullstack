@@ -203,7 +203,7 @@ export class HomeComponent {
   }
 
 scrollToForm() {
-  document.getElementById('enquiry-form')?.scrollIntoView({
+  document.getElementById('repairForm')?.scrollIntoView({
     behavior: 'smooth',
     block: 'start'
   });
