@@ -168,9 +168,19 @@ export class AdminComponent implements OnInit, OnDestroy {
     return url.includes('/upload/') ? url.replace('/upload/', '/upload/fl_attachment/') : url;
   }
 
-  
-  // Mobile sidebar
+// Mobile sidebar
 sidebarOpen = false;
+
+toggleSidebar(): void {
+  this.sidebarOpen = !this.sidebarOpen;
+
+  if (this.sidebarOpen) {
+    document.body.style.overflow = 'hidden';   // lock scroll
+  } else {
+    document.body.style.overflow = '';         // restore scroll
+  }
+}
+  
 
 // Image viewer
 lightboxOpen = false;
