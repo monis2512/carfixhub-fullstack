@@ -236,6 +236,57 @@ downloadImage(url: string): void {
   }, 250); // Wait for sidebar to close
 }
 
+  searchTerm = '';
+
+currentPage = 1;
+itemsPerPage = 5;
+
+  get filteredEnquiries() {
+  const term = this.searchTerm.trim().toLowerCase();
+
+  const filtered = this.enquiries.filter(enquiry =>
+    (enquiry.carModel || '').toLowerCase().includes(term) ||
+    (enquiry.mobileNumber || '').toLowerCase().includes(term)
+  );
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / this.itemsPerPage));
+
+  if (this.currentPage > totalPages) {
+    this.currentPage = totalPages;
+  }
+
+  return filtered;
+}
+
+  get paginatedEnquiries() {
+  const start = (this.currentPage - 1) * this.itemsPerPage;
+  return this.filteredEnquiries.slice(start, start + this.itemsPerPage);
+}
+
+get totalPages() {
+  return Math.max(1, Math.ceil(this.filteredEnquiries.length / this.itemsPerPage));
+}
+
+get pages() {
+  return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+}
+
+  goToPage(page: number) {
+  this.currentPage = page;
+}
+
+nextPage() {
+  if (this.currentPage < this.totalPages) {
+    this.currentPage++;
+  }
+}
+
+prevPage() {
+  if (this.currentPage > 1) {
+    this.currentPage--;
+  }
+}
+  
   ngOnDestroy(): void {
     this.poll?.unsubscribe();
   }
