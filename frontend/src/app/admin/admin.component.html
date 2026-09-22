@@ -183,7 +183,8 @@
     <th>ID</th>
     <th>Car</th>
     <th>Service</th>
-    <th>Customer</th>
+    <th>Customer Name</th>
+    <th>Customer Mobile Number</th>
     <th>Damage</th>
     <th>Submitted On</th>
     <th>Photos</th>
@@ -206,6 +207,8 @@
               {{ enquiry.serviceType }}
             </span>
           </td>
+
+          <td>{{ enquiry.customerName }}</td>
 
           <td>{{ enquiry.mobileNumber }}</td>
 
