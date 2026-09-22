@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import { ApiService } from '../core/api.service';
 import { APP_CONFIG } from '../core/app-config';
 import { CloudinaryService } from '../core/cloudinary.service';
+import { HeroAnimationComponent } from '../hero-animation/hero-animation.component';
 
 @Component({
   selector: 'app-home',
