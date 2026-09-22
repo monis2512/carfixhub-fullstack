@@ -150,7 +150,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     window.location.href = '/admin';
   }
 
-  formatDateTime(value: string): string {
+ /* formatDateTime(value: string): string {
     if (!value) return '—';
     const date = new Date(value);
     if (Number.isNaN(date.getTime())) return value;
@@ -158,6 +158,27 @@ export class AdminComponent implements OnInit, OnDestroy {
       timeZone: 'Asia/Kolkata', day: '2-digit', month: '2-digit', year: 'numeric',
       hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
     }).format(date);
+  }*/
+
+  formatDateTime(date: string): string {
+  const d = new Date(date);
+
+  const months = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
+  ];
+
+  const day = d.getDate();
+  const month = months[d.getMonth()];
+  const year = d.getFullYear();
+
+  let hours = d.getHours();
+  const minutes = d.getMinutes().toString().padStart(2, '0');
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+
+  hours = hours % 12 || 12;
+
+  return `${day} ${month}'${year} • ${hours}:${minutes} ${ampm}`;
   }
 
   photoUrls(q: Enquiry): string[] {
