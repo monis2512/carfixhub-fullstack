@@ -3,8 +3,9 @@
   <!-- Top Header -->
   <header class="topbar">
 
-    <button class="menu-btn" (click)="toggleSidebar(true)">☰</button>
-
+    <button class="menu-btn" (click)="sidebarOpen = !sidebarOpen">
+      ☰
+    </button>
 
     <div class="header-title">
       <h1>CarFixHub</h1>
@@ -33,9 +34,9 @@
 
     </div>
 
-    <button class="close-menu" (click)="toggleSidebar(false)">✕</button>
-<div class="overlay" *ngIf="sidebarOpen" (click)="toggleSidebar()"></div>
-    
+    <button class="close-menu" (click)="sidebarOpen=false">
+      ✕
+    </button>
 
   </div>
 
