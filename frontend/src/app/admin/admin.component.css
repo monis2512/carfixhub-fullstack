@@ -817,6 +817,82 @@ color:#0f172a;
 color:#94a3b8;
 }
 
+/* ================= PAGINATION ================= */
+
+.pagination{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:10px;
+margin:30px 0 10px;
+flex-wrap:wrap;
+}
+
+.page-btn,
+.page-number{
+border:none;
+cursor:pointer;
+transition:.25s;
+font-weight:600;
+}
+
+.page-btn{
+padding:12px 18px;
+border-radius:12px;
+background:white;
+color:#2563eb;
+box-shadow:0 6px 16px rgba(15,23,42,.08);
+}
+
+.page-btn:hover:not(:disabled){
+transform:translateY(-2px);
+background:#eff6ff;
+}
+
+.page-btn:disabled{
+opacity:.45;
+cursor:not-allowed;
+}
+
+.page-number{
+width:42px;
+height:42px;
+border-radius:12px;
+background:white;
+color:#475569;
+box-shadow:0 6px 16px rgba(15,23,42,.06);
+}
+
+.page-number:hover{
+background:#dbeafe;
+color:#2563eb;
+}
+
+.page-number.active{
+background:linear-gradient(135deg,#2563eb,#3b82f6);
+color:white;
+box-shadow:0 10px 22px rgba(37,99,235,.3);
+}
+
+@media(max-width:600px){
+
+.pagination{
+gap:8px;
+}
+
+.page-btn{
+padding:10px 14px;
+font-size:13px;
+}
+
+.page-number{
+width:36px;
+height:36px;
+font-size:13px;
+}
+
+}
+
 /* ================= MOBILE ================= */
 
 @media(max-width:900px){
