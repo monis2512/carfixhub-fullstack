@@ -169,13 +169,19 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
 // Mobile sidebar
+// Mobile sidebar
 sidebarOpen = false;
 
- // if (this.sidebarOpen) {
- // document.body.classList.add('sidebar-open');
-//} else {
- // document.body.classList.remove('sidebar-open');
-//}
+toggleSidebar(open?: boolean): void {
+  this.sidebarOpen = open !== undefined ? open : !this.sidebarOpen;
+
+  if (this.sidebarOpen) {
+    document.body.classList.add('sidebar-open');   // lock scroll
+  } else {
+    document.body.classList.remove('sidebar-open'); // restore scroll
+  }
+}
+  
 
 
 toggleSidebar(): void {
