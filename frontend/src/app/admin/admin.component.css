@@ -961,6 +961,13 @@ nav a:hover {
     background: #1d4ed8;
 }
 
+.submitted-cell{
+  white-space: nowrap;
+  color:#475569;
+  font-size:13px;
+  font-weight:500;
+}
+
 .details-table {
     width: max-content;
     min-width: 1100px;
