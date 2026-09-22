@@ -19,6 +19,10 @@ public class CarQuery {
     @Column(nullable = false, length = 2000)
     private String description;
 
+    @Column(nullable = false, length = 200)
+    private String customerName;
+
+
     @Column(nullable = false, length = 20)
     private String mobileNumber;
 
@@ -45,6 +49,10 @@ public class CarQuery {
     public Long getId() { return id; }
     public String getCarModel() { return carModel; }
     public void setCarModel(String value) { this.carModel = value; }
+
+public String getCustomerName() { return customerName; }
+    public void setCustomerName   (String value) { this.customerName = value; }
+    
     public String getServiceType() { return serviceType; }
     public void setServiceType(String value) { this.serviceType = value; }
     public String getDescription() { return description; }
