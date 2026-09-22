@@ -182,17 +182,6 @@ toggleSidebar(open?: boolean): void {
   }
 }
   
-
-
-toggleSidebar(): void {
-  this.sidebarOpen = !this.sidebarOpen;
-
-  if (this.sidebarOpen) {
-    document.body.style.overflow = 'hidden';   // lock scroll
-  } else {
-    document.body.style.overflow = '';         // restore scroll
-  }
-}
   
 
 // Image viewer
