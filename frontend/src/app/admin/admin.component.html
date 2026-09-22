@@ -164,15 +164,15 @@
 <div class="search-box">
 
   <span class="search-icon">🔍</span>
-
-  <input
-    type="text"
-    [(ngModel)]="searchTerm"
-    placeholder="Search by Car Model or Phone Number">
+<input
+  type="text"
+  [(ngModel)]="searchTerm"
+  (ngModelChange)="currentPage=1"
+  placeholder="Search by Car Model or Phone Number">
 
 </div>
       
-        <div class="enquiry-card" *ngFor="let enquiry of filteredEnquiries">
+        <div class="enquiry-card" *ngFor="let enquiry of paginatedEnquiries">
 
   <div class="accent"></div>
 
@@ -281,6 +281,38 @@
     </button>
 
   </div>
+
+</div>
+
+      <div class="pagination" *ngIf="totalPages > 1">
+
+  <button
+    class="page-btn"
+    (click)="prevPage()"
+    [disabled]="currentPage===1">
+
+    ← Previous
+
+  </button>
+
+  <button
+    *ngFor="let page of pages"
+    class="page-number"
+    [class.active]="page===currentPage"
+    (click)="goToPage(page)">
+
+    {{ page }}
+
+  </button>
+
+  <button
+    class="page-btn"
+    (click)="nextPage()"
+    [disabled]="currentPage===totalPages">
+
+    Next →
+
+  </button>
 
 </div>
 
