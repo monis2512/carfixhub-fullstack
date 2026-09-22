@@ -66,6 +66,7 @@ export class HomeComponent {
   brand = '';
   model = '';
   service = '';
+  customerName = '';
   mobile = '';
   description = '';
   selectedFiles: File[] = [];
@@ -148,6 +149,7 @@ export class HomeComponent {
       await firstValueFrom(this.api.submitEnquiry({
         carModel: `${this.brand} - ${this.model}`,
         serviceType: this.service,
+        customerName : this.customerName.trim(),
         mobileNumber: mobile,
         description: this.description.trim(),
         photoName: this.selectedFiles.map(file => file.name).join(', '),
@@ -184,6 +186,7 @@ export class HomeComponent {
     this.brand = '';
     this.model = '';
     this.service = '';
+    this.customerName = '';
     this.mobile = '';
     this.description = '';
     this.clearPreviews();
