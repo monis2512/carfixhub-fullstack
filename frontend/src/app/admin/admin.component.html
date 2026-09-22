@@ -179,24 +179,24 @@
     <table class="crm-table">
 
       <thead>
-        <tr>
-          <th>ID</th>
-          <th>Car</th>
-          <th>Service</th>
-          <th>Customer</th>
-          <th>Damage</th>
-          <th>Photos</th>
-          <th>Action</th>
-        </tr>
-      </thead>
+  <tr>
+    <th>ID</th>
+    <th>Car</th>
+    <th>Service</th>
+    <th>Customer</th>
+    <th>Damage</th>
+    <th>Submitted On</th>
+    <th>Photos</th>
+    <th>Action</th>
+  </tr>
+</thead>
 
       <tbody>
 
         <tr *ngFor="let enquiry of paginatedEnquiries">
 
           <td>
-            <strong>#{{ enquiry.id }}</strong><br>
-            <small>{{ formatDateTime(enquiry.createdAt) }}</small>
+            <strong>#{{ enquiry.id }}</strong>
           </td>
 
           <td>{{ enquiry.carModel }}</td>
@@ -212,6 +212,10 @@
           <td class="damage-cell">
             {{ enquiry.description }}
           </td>
+
+          <td class="submitted-cell">
+  {{ formatDateTime(enquiry.createdAt) }}
+</td>
 
           <td>
 
