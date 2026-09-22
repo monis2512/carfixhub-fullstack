@@ -4,6 +4,211 @@ background:#f8fbff;
 color:#1e293b;
 }
 
+.hero-3d{
+
+display:grid;
+grid-template-columns:1.05fr 1fr;
+align-items:center;
+gap:60px;
+padding:70px 0;
+}
+
+.hero-content{
+
+animation:fadeUp .9s ease;
+}
+
+.hero-badge{
+
+display:inline-block;
+padding:8px 18px;
+border-radius:999px;
+background:#dbeafe;
+color:#2563eb;
+font-weight:600;
+margin-bottom:18px;
+}
+
+.hero-content h1{
+
+font-size:58px;
+line-height:1.05;
+color:#0f172a;
+margin-bottom:18px;
+}
+
+.hero-content p{
+
+font-size:18px;
+line-height:1.7;
+color:#64748b;
+margin-bottom:30px;
+}
+
+.hero-buttons{
+
+display:flex;
+gap:16px;
+flex-wrap:wrap;
+}
+
+.primary-btn{
+
+background:#2563eb;
+color:white;
+border:none;
+padding:15px 28px;
+border-radius:14px;
+font-weight:700;
+cursor:pointer;
+transition:.3s;
+}
+
+.primary-btn:hover{
+
+transform:translateY(-3px);
+box-shadow:0 12px 28px rgba(37,99,235,.3);
+}
+
+.secondary-btn{
+
+background:white;
+color:#2563eb;
+border:2px solid #2563eb;
+padding:15px 28px;
+border-radius:14px;
+font-weight:700;
+cursor:pointer;
+transition:.3s;
+}
+
+.secondary-btn:hover{
+
+background:#eff6ff;
+}
+
+.hero-image{
+
+position:relative;
+overflow:hidden;
+border-radius:30px;
+animation:cinematicZoom 5s ease forwards;
+}
+
+.hero-image img{
+
+width:100%;
+display:block;
+border-radius:30px;
+}
+
+.paint-glow{
+
+position:absolute;
+top:35%;
+left:-40%;
+width:60%;
+height:32%;
+background:linear-gradient(90deg,
+rgba(37,99,235,.45),
+rgba(96,165,250,.15),
+transparent);
+filter:blur(12px);
+animation:paintSweep 1.2s ease forwards;
+animation-delay:2.3s;
+}
+
+.shine{
+
+position:absolute;
+top:0;
+left:-40%;
+width:35%;
+height:100%;
+background:linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.7),
+transparent);
+transform:skewX(-20deg);
+animation:shinePass 1.2s ease forwards;
+animation-delay:3.8s;
+}
+
+@keyframes cinematicZoom{
+
+0%{
+transform:scale(1.08);
+}
+
+100%{
+transform:scale(1);
+}
+}
+
+@keyframes paintSweep{
+
+to{
+left:100%;
+}
+}
+
+@keyframes shinePass{
+
+to{
+left:130%;
+}
+}
+
+@keyframes fadeUp{
+
+from{
+opacity:0;
+transform:translateY(25px);
+}
+
+to{
+opacity:1;
+transform:none;
+}
+}
+
+@media(max-width:900px){
+
+.hero-3d{
+
+grid-template-columns:1fr;
+padding:35px 0;
+gap:28px;
+}
+
+.hero-content{
+
+order:2;
+text-align:center;
+}
+
+.hero-image{
+
+order:1;
+}
+
+.hero-content h1{
+
+font-size:38px;
+}
+
+.hero-content p{
+
+font-size:16px;
+}
+
+.hero-buttons{
+
+justify-content:center;
+}
+}
+
 .hero{
 background:linear-gradient(135deg,#eef6ff,#ffffff);
 padding:70px 20px;
