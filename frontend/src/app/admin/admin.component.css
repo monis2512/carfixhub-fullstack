@@ -1480,3 +1480,7 @@ body {
     max-width: 100%;
     overflow-x: hidden;
 }
+
+body.sidebar-open {
+  overflow: hidden;
+}
