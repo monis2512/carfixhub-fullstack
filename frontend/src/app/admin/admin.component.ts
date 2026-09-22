@@ -168,21 +168,9 @@ export class AdminComponent implements OnInit, OnDestroy {
     return url.includes('/upload/') ? url.replace('/upload/', '/upload/fl_attachment/') : url;
   }
 
-// Mobile sidebar
-// Mobile sidebar
+  
+  // Mobile sidebar
 sidebarOpen = false;
-
-toggleSidebar(open?: boolean): void {
-  this.sidebarOpen = open !== undefined ? open : !this.sidebarOpen;
-
-  if (this.sidebarOpen) {
-    document.body.classList.add('sidebar-open');   // lock scroll
-  } else {
-    document.body.classList.remove('sidebar-open'); // restore scroll
-  }
-}
-  
-  
 
 // Image viewer
 lightboxOpen = false;
@@ -302,4 +290,4 @@ prevPage() {
   ngOnDestroy(): void {
     this.poll?.unsubscribe();
   }
-}
+    }
