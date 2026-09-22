@@ -198,7 +198,7 @@
 
   </div>
 
-  <div class="info-grid">
+<!--  <div class="info-grid">
 
     <div class="info-box">
 
@@ -223,14 +223,6 @@
       <strong>{{ enquiry.mobileNumber }}</strong>
 
     </div>
-
-  <!--  <div class="info-box">
-
-      <label>Submitted</label>
-
-      <strong>{{ formatDateTime(enquiry.createdAt) }}</strong>
-
-    </div>-->
 
   </div>
 
@@ -280,7 +272,86 @@
       🗑 Delete
     </button>
 
+  </div>-->
+
+          <div class="table-scroll">
+
+  <div class="details-table">
+
+    <div class="table-header">
+      <span>Car</span>
+      <span>Service</span>
+      <span>Customer</span>
+      <span>Damage</span>
+      <span>Photos</span>
+      <span>Action</span>
+    </div>
+
+    <div class="table-row">
+
+      <div>{{ enquiry.carModel }}</div>
+
+      <div>
+        <span class="service-pill">{{ enquiry.serviceType }}</span>
+      </div>
+
+      <div>{{ enquiry.mobileNumber }}</div>
+
+      <div class="damage-cell">
+        {{ enquiry.description }}
+      </div>
+
+      <div class="photo-cell">
+
+        <div
+          class="mini-photo"
+          *ngFor="let photo of photoUrls(enquiry); let i=index">
+
+          <img
+            [src]="photo"
+            (click)="openLightbox(photoUrls(enquiry),i)">
+
+          <div class="mini-photo-actions">
+
+            <button
+              class="mini-view"
+              (click)="openLightbox(photoUrls(enquiry),i)">
+              View
+            </button>
+
+            <button
+              class="mini-download"
+              (click)="downloadImage(photo)">
+              Download
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="table-actions">
+
+        <button
+          class="call-btn mini"
+          (click)="callCustomer(enquiry.mobileNumber)">
+          📞 Call
+        </button>
+
+        <button
+          class="delete-btn mini"
+          (click)="deleteQuery(enquiry)">
+          🗑 Delete
+        </button>
+
+      </div>
+
+    </div>
+
   </div>
+
+</div>
 
 </div>
 
