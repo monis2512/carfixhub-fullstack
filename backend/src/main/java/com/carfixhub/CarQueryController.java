@@ -29,6 +29,7 @@ public class CarQueryController {
         q.setCarModel(r.getCarModel().trim());
         q.setServiceType(r.getServiceType().trim());
         q.setDescription(r.getDescription().trim());
+        q.setCustomerName(r.getCustomerName().trim());
         q.setMobileNumber(mobile);
         q.setPhotoName(clean(r.getPhotoName()));
         q.setPhotoUrl1(clean(r.getPhotoUrl1()));
