@@ -145,18 +145,34 @@
 
     <section class="list" id="enquiries">
 
-      <div class="list-header">
+       <div class="list-header">
 
-        <h2>Recent Enquiries</h2>
+  <div class="header-left">
 
-        <!--<button class="refresh-small" (click)="loadQueries(true)">
-          Refresh
-        </button> -->
+    <h2>Recent Enquiries</h2>
 
-      </div>
+    <p>{{ filteredEnquiries.length }} result(s)</p>
 
+  </div>
+
+  <button class="refresh-small" (click)="loadQueries(true)">
+    🔄 Refresh
+  </button>
+
+</div>
+
+<div class="search-box">
+
+  <span class="search-icon">🔍</span>
+
+  <input
+    type="text"
+    [(ngModel)]="searchTerm"
+    placeholder="Search by Car Model or Phone Number">
+
+</div>
       
-        <div class="enquiry-card" *ngFor="let enquiry of enquiries">
+        <div class="enquiry-card" *ngFor="let enquiry of filteredEnquiries">
 
   <div class="accent"></div>
 
