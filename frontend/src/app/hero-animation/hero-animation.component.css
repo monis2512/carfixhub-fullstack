@@ -1,192 +1,889 @@
-.hero-animation{
-padding:30px 20px;
-background:linear-gradient(180deg,#f8fbff,#eef5ff);
-border-radius:30px;
-overflow:hidden;
-margin-bottom:40px;
+.hero-animation {
+  padding: 30px 20px;
+  background: linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
+  border-radius: 30px;
+  overflow: hidden;
+  margin-bottom: 40px;
+  box-sizing: border-box;
 }
 
-.scene{
-position:relative;
-height:240px;
+.scene {
+  position: relative;
+  height: 240px;
+  width: 100%;
+  max-width: 650px;
+  margin: auto;
+  overflow: hidden;
 }
 
-.car{
-position:absolute;
-left:-460px;
-bottom:15px;
-width:420px;
-animation:driveIn 1.3s ease forwards;
+/* =========================
+   WORKSHOP
+========================= */
+
+.floor {
+  position: absolute;
+  left: -5%;
+  bottom: 0;
+  width: 110%;
+  height: 48px;
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(148, 163, 184, .12) 0,
+      rgba(148, 163, 184, .12) 2px,
+      transparent 2px,
+      transparent 80px
+    ),
+    linear-gradient(
+      180deg,
+      #e5edf6,
+      #d5e0ec
+    );
+
+  border-top: 1px solid rgba(100, 116, 139, .18);
 }
 
-.car-body{
-fill:white;
-stroke:#2563eb;
-stroke-width:4;
+.workshop-glow {
+  position: absolute;
+  top: 0;
+  left: 18%;
+  width: 64%;
+  height: 130px;
+
+  background: radial-gradient(
+    ellipse,
+    rgba(255,255,255,.95),
+    rgba(219,234,254,.25),
+    transparent 70%
+  );
+
+  pointer-events: none;
 }
 
-.window{
-fill:#bfe0ff;
+
+/* =========================
+   TOOL CART
+========================= */
+
+.tool-cart {
+  position: absolute;
+  left: 4%;
+  bottom: 40px;
+  width: 65px;
+  height: 85px;
+  z-index: 4;
+  animation: cartMove 1s ease forwards;
 }
 
-.wheel{
-fill:#1e293b;
-stroke:#64748b;
-stroke-width:5;
+.cart-top {
+  position: absolute;
+  top: 0;
+  width: 65px;
+  height: 9px;
+  border-radius: 5px;
+  background: linear-gradient(#334155, #64748b);
 }
 
-.dent{
-fill:#9ca3af;
-animation:dentFix .4s ease forwards;
-animation-delay:2.4s;
+.cart-body {
+  position: absolute;
+  top: 8px;
+  width: 58px;
+  height: 65px;
+  background: linear-gradient(
+    90deg,
+    #1d4ed8,
+    #2563eb,
+    #1e40af
+  );
+  border-radius: 3px 3px 6px 6px;
+  box-shadow: 4px 6px 12px rgba(15,23,42,.18);
 }
 
-.worker{
-position:absolute;
-left:-120px;
-bottom:25px;
-width:70px;
-height:150px;
-animation:walkIn 1.3s ease forwards;
-animation-delay:1.2s;
+.cart-body span {
+  display: block;
+  height: 12px;
+  margin: 8px 5px;
+
+  border-radius: 2px;
+
+  background: #172554;
+  border-bottom: 1px solid #60a5fa;
 }
 
-.head{
-width:28px;
-height:28px;
-background:#f6c7a5;
-border-radius:50%;
-margin:auto;
+.cart-wheel {
+  position: absolute;
+  bottom: -8px;
+  width: 12px;
+  height: 12px;
+
+  background: #1e293b;
+  border: 2px solid #64748b;
+  border-radius: 50%;
 }
 
-.body{
-width:36px;
-height:56px;
-background:#2563eb;
-border-radius:10px;
-margin:6px auto;
+.cart-wheel.left {
+  left: 8px;
 }
 
-.arm{
-position:absolute;
-top:42px;
-left:44px;
-width:42px;
-height:8px;
-background:#2563eb;
-transform-origin:left;
-animation:hammerHit .5s ease 3;
-animation-delay:2s;
+.cart-wheel.right {
+  right: 8px;
 }
 
-.leg{
-position:absolute;
-width:8px;
-height:45px;
-background:#0f172a;
-bottom:0;
+
+/* =========================
+   CAR
+========================= */
+
+.car {
+  position: absolute;
+  z-index: 2;
+
+  left: 50%;
+  bottom: 22px;
+
+  width: min(620px, 96%);
+  height: auto;
+
+  transform: translateX(-50%) translateX(100%);
+  animation: carEnter 1.4s cubic-bezier(.2,.8,.2,1) forwards;
 }
 
-.left{left:24px;}
-.right{left:38px;}
-
-.hammer{
-position:absolute;
-top:28px;
-left:70px;
-width:6px;
-height:28px;
-background:#444;
-transform-origin:bottom;
-animation:hammerHit .5s ease 3;
-animation-delay:2s;
+.car-body {
+  fill: url(#carPaint);
+  stroke: #64748b;
+  stroke-width: 3;
 }
 
-.hammer::after{
-content:"";
-position:absolute;
-top:-5px;
-left:-6px;
-width:18px;
-height:7px;
-background:#9ca3af;
-border-radius:3px;
+.dent {
+  fill: rgba(100,116,139,.22);
+  stroke: #64748b;
+  stroke-width: 2;
+
+  transform-origin: 288px 172px;
+
+  animation:
+    dentVisible .8s ease forwards,
+    dentRepair .9s ease 3.1s forwards;
 }
 
-.spray{
-position:absolute;
-left:210px;
-bottom:85px;
-width:0;
-height:70px;
-background:linear-gradient(90deg,
-rgba(37,99,235,.65),
-rgba(96,165,250,.2),
-transparent);
-filter:blur(4px);
-animation:paint 1s ease forwards;
-animation-delay:3.2s;
+.dent-line {
+  fill: none;
+  stroke: #64748b;
+  stroke-width: 3;
+  opacity: .55;
+
+  animation: dentDisappear .8s ease 3.1s forwards;
 }
 
-.sparkle{
-position:absolute;
-left:245px;
-bottom:108px;
-font-size:26px;
-opacity:0;
-animation:spark .8s ease forwards;
-animation-delay:4.2s;
+.repair-highlight {
+  fill: none;
+  stroke: #60a5fa;
+  stroke-width: 7;
+  stroke-linecap: round;
+  opacity: 0;
+
+  animation: repairHighlight 1s ease 2.4s forwards;
 }
 
-@keyframes driveIn{
-to{
-left:50%;
-transform:translateX(-50%);
-}
+.wheel-group {
+  transform-box: fill-box;
+  transform-origin: center;
+
+  animation: wheelSpin 1.4s ease forwards;
 }
 
-@keyframes walkIn{
-to{
-left:52%;
-transform:translateX(-170px);
-}
+
+/* =========================
+   MECHANIC
+========================= */
+
+.mechanic {
+  position: absolute;
+
+  left: 50%;
+  bottom: 43px;
+
+  width: 105px;
+  height: 150px;
+
+  z-index: 5;
+
+  transform:
+    translateX(-115px)
+    translateY(20px)
+    scale(.92);
+
+  opacity: 0;
+
+  animation:
+    mechanicEnter 1.1s ease 1.1s forwards,
+    mechanicRepair .9s ease 2.4s forwards;
 }
 
-@keyframes hammerHit{
-0%,100%{transform:rotate(0deg);}
-50%{transform:rotate(-45deg);}
+
+/* Head */
+
+.mechanic-head {
+  position: absolute;
+
+  top: 0;
+  left: 36px;
+
+  width: 35px;
+  height: 39px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #f8c8a8,
+      #d99572
+    );
+
+  border-radius: 48% 48% 45% 45%;
+
+  box-shadow:
+    inset -5px -4px 8px rgba(120,70,45,.18);
 }
 
-@keyframes dentFix{
-to{
-transform:scale(.1);
-opacity:0;
-}
+.hair {
+  position: absolute;
+  top: -4px;
+  left: 1px;
+
+  width: 34px;
+  height: 18px;
+
+  background: #111827;
+
+  border-radius: 50% 50% 35% 35%;
 }
 
-@keyframes paint{
-to{
-width:140px;
-}
-}
+.ear {
+  position: absolute;
 
-@keyframes spark{
-50%{opacity:1;transform:scale(1.3);}
-100%{opacity:0;}
-}
+  right: -3px;
+  top: 17px;
 
-@media(max-width:768px){
+  width: 7px;
+  height: 11px;
 
-.scene{
-height:180px;
+  background: #d99572;
+  border-radius: 50%;
 }
 
-.car{
-width:300px;
+
+/* Neck */
+
+.neck {
+  position: absolute;
+
+  top: 34px;
+  left: 47px;
+
+  width: 15px;
+  height: 13px;
+
+  background: #d99572;
 }
 
-.worker{
-transform:scale(.82);
+
+/* Body */
+
+.mechanic-body {
+  position: absolute;
+
+  top: 43px;
+  left: 28px;
+
+  width: 55px;
+  height: 68px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #172554,
+      #1e3a8a,
+      #172554
+    );
+
+  border-radius: 12px 12px 7px 7px;
+
+  box-shadow:
+    4px 5px 8px rgba(15,23,42,.25);
 }
 
+.shirt-logo {
+  position: absolute;
+
+  top: 15px;
+  left: 18px;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  color: rgba(255,255,255,.75);
+}
+
+
+/* Arms */
+
+.mechanic-arm {
+  position: absolute;
+
+  height: 13px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #172554,
+      #1e40af
+    );
+
+  border-radius: 8px;
+
+  transform-origin: left center;
+}
+
+.back-arm {
+  top: 53px;
+  left: 68px;
+
+  width: 45px;
+
+  transform: rotate(18deg);
+}
+
+.front-arm {
+  top: 73px;
+  left: 68px;
+
+  width: 48px;
+
+  transform: rotate(-18deg);
+
+  animation:
+    toolAction .45s ease-in-out 2.5s 5;
+}
+
+.glove {
+  position: absolute;
+
+  right: -6px;
+  top: -2px;
+
+  width: 14px;
+  height: 16px;
+
+  background: #e2e8f0;
+  border-radius: 50%;
+}
+
+
+/* Legs */
+
+.mechanic-leg {
+  position: absolute;
+
+  top: 104px;
+
+  width: 17px;
+  height: 43px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #0f172a,
+      #1e293b
+    );
+
+  border-radius: 7px;
+}
+
+.back-leg {
+  left: 32px;
+  transform: rotate(16deg);
+}
+
+.front-leg {
+  left: 59px;
+  transform: rotate(-26deg);
+}
+
+
+/* Shoes */
+
+.shoe {
+  position: absolute;
+
+  bottom: -2px;
+
+  width: 35px;
+  height: 12px;
+
+  background: #111827;
+
+  border-radius: 12px 8px 5px 5px;
+}
+
+.back-shoe {
+  left: 17px;
+}
+
+.front-shoe {
+  left: 54px;
+}
+
+
+/* Repair tool */
+
+.repair-tool {
+  position: absolute;
+
+  top: 73px;
+  left: 102px;
+
+  width: 52px;
+  height: 12px;
+
+  transform: rotate(-10deg);
+
+  animation:
+    toolAction .45s ease-in-out 2.5s 5;
+}
+
+.tool-handle {
+  position: absolute;
+
+  width: 39px;
+  height: 8px;
+
+  background: #334155;
+  border-radius: 5px;
+}
+
+.tool-head {
+  position: absolute;
+
+  right: 0;
+  top: -4px;
+
+  width: 17px;
+  height: 17px;
+
+  background: #64748b;
+
+  border-radius: 50%;
+
+  box-shadow:
+    inset 2px 2px 3px rgba(255,255,255,.35);
+}
+
+
+/* =========================
+   PAINT SPRAY
+========================= */
+
+.paint-spray {
+  position: absolute;
+
+  z-index: 6;
+
+  left: 46%;
+  bottom: 95px;
+
+  width: 5px;
+  height: 5px;
+
+  opacity: 0;
+
+  animation:
+    sprayStart .2s ease 4.4s forwards;
+}
+
+.paint-spray span {
+  position: absolute;
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #60a5fa;
+
+  opacity: 0;
+
+  animation: sprayParticle .8s ease-in-out 4.4s infinite;
+}
+
+.paint-spray span:nth-child(1) {
+  --x: -35px;
+  --y: -10px;
+}
+
+.paint-spray span:nth-child(2) {
+  --x: -20px;
+  --y: 5px;
+}
+
+.paint-spray span:nth-child(3) {
+  --x: -45px;
+  --y: 20px;
+}
+
+.paint-spray span:nth-child(4) {
+  --x: -25px;
+  --y: 30px;
+}
+
+.paint-spray span:nth-child(5) {
+  --x: -55px;
+  --y: 2px;
+}
+
+
+/* =========================
+   SPARKS
+========================= */
+
+.repair-sparks {
+  position: absolute;
+
+  left: 45%;
+  bottom: 120px;
+
+  z-index: 8;
+
+  opacity: 0;
+  animation: sparks .8s ease 3.5s forwards;
+}
+
+.repair-sparks span {
+  position: absolute;
+
+  color: #60a5fa;
+
+  font-size: 18px;
+}
+
+.repair-sparks span:nth-child(1) {
+  left: -20px;
+  top: 5px;
+}
+
+.repair-sparks span:nth-child(2) {
+  left: 20px;
+  top: -14px;
+}
+
+.repair-sparks span:nth-child(3) {
+  left: 34px;
+  top: 18px;
+}
+
+
+/* Final shine */
+
+.car-shine {
+  position: absolute;
+
+  z-index: 9;
+
+  left: 62%;
+  bottom: 105px;
+
+  font-size: 28px;
+
+  color: #ffffff;
+
+  opacity: 0;
+
+  text-shadow:
+    0 0 8px #60a5fa,
+    0 0 20px #60a5fa;
+
+  animation:
+    finalShine .9s ease 5.1s forwards;
+}
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes carEnter {
+
+  0% {
+    transform:
+      translateX(-50%)
+      translateX(100%);
+  }
+
+  100% {
+    transform:
+      translateX(-50%)
+      translateX(0);
+  }
+}
+
+
+@keyframes mechanicEnter {
+
+  0% {
+    opacity: 0;
+    transform:
+      translateX(-70px)
+      translateY(20px)
+      scale(.92);
+  }
+
+  100% {
+    opacity: 1;
+    transform:
+      translateX(-115px)
+      translateY(0)
+      scale(.92);
+  }
+}
+
+
+@keyframes mechanicRepair {
+
+  0%,
+  100% {
+    transform:
+      translateX(-115px)
+      translateY(0)
+      scale(.92);
+  }
+
+  50% {
+    transform:
+      translateX(-115px)
+      translateY(4px)
+      scale(.92);
+  }
+}
+
+
+@keyframes toolAction {
+
+  0%,
+  100% {
+    transform: rotate(-18deg);
+  }
+
+  50% {
+    transform: rotate(-35deg);
+  }
+}
+
+
+@keyframes dentVisible {
+
+  0% {
+    opacity: 0;
+    transform: scale(.4);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+@keyframes dentRepair {
+
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  60% {
+    transform: scale(.45);
+  }
+
+  100% {
+    transform: scale(.05);
+    opacity: 0;
+  }
+}
+
+
+@keyframes dentDisappear {
+
+  to {
+    opacity: 0;
+  }
+}
+
+
+@keyframes repairHighlight {
+
+  0% {
+    opacity: 0;
+    stroke-dasharray: 0 100;
+  }
+
+  50% {
+    opacity: 1;
+    stroke-dasharray: 60 40;
+  }
+
+  100% {
+    opacity: 0;
+    stroke-dasharray: 100 0;
+  }
+}
+
+
+@keyframes sprayStart {
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+@keyframes sprayParticle {
+
+  0% {
+    opacity: 0;
+    transform:
+      translate(0, 0)
+      scale(.4);
+  }
+
+  40% {
+    opacity: .85;
+  }
+
+  100% {
+    opacity: 0;
+    transform:
+      translate(var(--x), var(--y))
+      scale(1);
+  }
+}
+
+
+@keyframes sparks {
+
+  0% {
+    opacity: 0;
+    transform: scale(.5);
+  }
+
+  35% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+
+@keyframes finalShine {
+
+  0% {
+    opacity: 0;
+    transform: scale(.5) rotate(-20deg);
+  }
+
+  40% {
+    opacity: 1;
+    transform: scale(1.2) rotate(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.5) rotate(20deg);
+  }
+}
+
+
+@keyframes wheelSpin {
+
+  from {
+    transform: rotate(-360deg);
+  }
+
+  to {
+    transform: rotate(0);
+  }
+}
+
+
+@keyframes cartMove {
+
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+  .hero-animation {
+    padding: 22px 12px;
+    border-radius: 28px;
+    margin-bottom: 35px;
+  }
+
+  .scene {
+    height: 190px;
+    max-width: 100%;
+  }
+
+  .car {
+    width: 570px;
+    max-width: none;
+
+    left: 52%;
+    bottom: 15px;
+  }
+
+  .mechanic {
+    left: 48%;
+    bottom: 34px;
+
+    transform:
+      translateX(-105px)
+      scale(.72);
+  }
+
+  .tool-cart {
+    left: 0;
+    bottom: 32px;
+
+    transform: scale(.75);
+    transform-origin: bottom left;
+  }
+
+  .paint-spray {
+    bottom: 78px;
+  }
+
+  .repair-sparks {
+    bottom: 100px;
+  }
+
+  .car-shine {
+    bottom: 92px;
+    left: 67%;
+  }
 }
