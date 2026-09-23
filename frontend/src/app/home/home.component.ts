@@ -118,6 +118,12 @@ export class HomeComponent {
     this.service = value;
   }
 
+  removePhoto(index: number): void {
+    URL.revokeObjectURL(this.previewUrls[index]);
+    this.previewUrls.splice(index, 1);
+    this.selectedFiles.splice(index, 1);
+  }
+
   async submit(): Promise<void> {
     this.status = '';
 
@@ -202,18 +208,18 @@ export class HomeComponent {
     this.previewUrls = [];
   }
 
-scrollToForm() {
-  document.getElementById('repairForm')?.scrollIntoView({
-    behavior: 'smooth',
-    block: 'start'
-  });
-}
+  scrollToForm() {
+    document.getElementById('repairForm')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
 
-scrollToServices() {
-  document.getElementById('services')?.scrollIntoView({
-    behavior: 'smooth',
-    block: 'start'
-  });
-}
-  
+  scrollToServices() {
+    document.getElementById('services')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+
 }
