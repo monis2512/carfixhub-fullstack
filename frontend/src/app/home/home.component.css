@@ -19,6 +19,12 @@
   --shadow-lift:0 16px 35px rgba(37,99,235,.14);
 }
 
+:host *,
+:host *::before,
+:host *::after{
+  box-sizing:border-box;
+}
+
 /* =========================
    SITE HEADER
 ========================= */
@@ -614,6 +620,8 @@
 
 .testimonial-card{
   flex:0 0 100%;
+  width:100%;
+  min-width:100%;
   background:white;
   border:1px solid var(--line);
   border-radius:var(--radius-lg);
