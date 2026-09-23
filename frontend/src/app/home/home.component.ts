@@ -22,12 +22,6 @@ interface StatItem {
   current: number;
 }
 
-interface BeforeAfterExample {
-  label: string;
-  before: string;
-  after: string;
-}
-
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -134,12 +128,8 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   private statsObserver?: IntersectionObserver;
 
   // ===== Before / after gallery =====
-  readonly beforeAfterExamples: BeforeAfterExample[] = [
-    { label: 'Bumper Dent', before: 'assets/before-after/bumper-before.jpg', after: 'assets/before-after/bumper-after.jpg' },
-    { label: 'Door Scratch', before: 'assets/before-after/door-before.jpg', after: 'assets/before-after/door-after.jpg' },
-    { label: 'Full Repaint', before: 'assets/before-after/paint-before.jpg', after: 'assets/before-after/paint-after.jpg' }
-  ];
-  activeExample = 0;
+  // Illustrated placeholder comparison — swap the SVGs in home.component.html
+  // for real <img> photos of your own repair work as soon as you have them.
   sliderPosition = 50;
 
   ngAfterViewInit(): void {
@@ -212,18 +202,12 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     this.startTestimonialAutoplay();
   }
 
-  // ===== Before/after controls =====
-  selectExample(i: number): void {
-    this.activeExample = i;
-    this.sliderPosition = 50;
-  }
-
+  // ===== Existing form logic =====
   onSliderInput(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.sliderPosition = Number(input.value);
   }
 
-  // ===== Existing form logic =====
   onBrandChange(): void {
     this.model = '';
   }
