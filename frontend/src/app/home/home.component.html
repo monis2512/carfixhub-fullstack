@@ -1,51 +1,10 @@
-<a class="admin-login" routerLink="/admin">Admin Login</a>
-
-<!--<section class="hero">
-
-  <div class="hero-content">
-
-    <div class="hero-text">
-
-      <span class="tag">
-        Professional Denting • Painting • Scratch Repair
-      </span>
-
-      <h1>Restore Your Car's Finish</h1>
-
-      <p>
-        Quick repair requests, quality workmanship and trusted service for
-        dents, scratches and paint damage.
-      </p>
-
-      <div class="hero-buttons">
-
-        <a href="#repairForm" class="btn-primary">
-          Request Repair
-        </a>
-
-        <a href="#services" class="btn-secondary">
-          View Services
-        </a>
-
-      </div>
-
-      <div class="trust">
-
-        <span>✓ Trusted Workshop</span>
-        <span>✓ Skilled Technicians</span>
-        <span>✓ Quality Finish</span>
-
-      </div>
-
-    </div>
-
-    <div class="hero-image">
-      <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80" alt="Car Repair">
-    </div>
-
-  </div>
-
-</section>-->
+<header class="site-header">
+  <a class="brand-mark" routerLink="/">
+    <span class="dot"></span>
+    CarFixHub
+  </a>
+  <a class="admin-login" routerLink="/admin">Admin Login</a>
+</header>
 
 <section class="hero-3d">
 
@@ -57,7 +16,7 @@
 
     <app-hero-animation></app-hero-animation>
 
-    <h1>Your Car Deserves a Fresh Start</h1>
+    <h1>Your Car Deserves a <span class="accent">Fresh Start</span></h1>
 
     <p>
       Professional dent repair, premium painting and scratch removal —
@@ -74,46 +33,52 @@
       </button>
     </div>
 
+    <div class="hero-trust">
+      <span>Trusted Workshop</span>
+      <span>Skilled Technicians</span>
+      <span>Quality Finish</span>
+    </div>
+
   </div>
 
   <div class="hero-image">
 
     <img
-  src="assets/hero-repair-3d.webp"
-  alt="CarFixHub Workshop"
-  loading="eager"
-  fetchpriority="high"
-  decoding="sync">
+      src="assets/hero-repair-3d.webp"
+      alt="CarFixHub Workshop"
+      loading="eager"
+      fetchpriority="high"
+      decoding="sync">
 
     <div class="paint-glow"></div>
-
+    <div class="repair-light"></div>
     <div class="shine"></div>
 
   </div>
 
 </section>
 
-
-
 <section class="services-section" id="services">
 
+  <span class="eyebrow">Our Services</span>
   <h2>What We Do</h2>
+  <p class="sub">From minor dents to full panel repaints, every job is finished to a factory-quality standard.</p>
 
   <div class="service-grid">
 
-    <div class="service-card">
+    <div class="service-card" style="--i:0">
       <div class="icon">🔨</div>
       <h3>Denting</h3>
       <p>Restore your car's original shape with precision repairs.</p>
     </div>
 
-    <div class="service-card">
+    <div class="service-card" style="--i:1">
       <div class="icon">🎨</div>
       <h3>Painting</h3>
       <p>Professional paint matching for a factory-like finish.</p>
     </div>
 
-    <div class="service-card">
+    <div class="service-card" style="--i:2">
       <div class="icon">✨</div>
       <h3>Scratch Repair</h3>
       <p>Remove scratches and restore a clean appearance.</p>
@@ -128,41 +93,43 @@
   <div class="card" id="repairForm">
 
     <h2>Request a Repair</h2>
+    <p class="form-sub">Tell us about your car and the damage — we'll get back to you shortly.</p>
 
     <div id="status" class="status" [class.error]="status && !statusOk" [class.success]="statusOk">
       {{ status }}
     </div>
 
-    <div class="field">
-      <label>Car Brand</label>
+    <div class="row-2">
 
-      <select [(ngModel)]="brand" (ngModelChange)="onBrandChange()">
+      <div class="field">
+        <label>Car Brand</label>
 
-        <option value="">Choose car brand</option>
+        <select [(ngModel)]="brand" (ngModelChange)="onBrandChange()">
 
-        <option *ngFor="let item of brands" [value]="item">
-          {{ item }}
-        </option>
+          <option value="">Choose car brand</option>
 
-      </select>
+          <option *ngFor="let item of brands" [value]="item">
+            {{ item }}
+          </option>
 
-    </div>
+        </select>
+      </div>
 
-    <div class="field">
+      <div class="field">
+        <label>Car Model</label>
 
-      <label>Car Model</label>
+        <select [(ngModel)]="model" [disabled]="!brand">
 
-      <select [(ngModel)]="model" [disabled]="!brand">
+          <option value="">
+            {{ brand ? 'Choose car model' : 'First choose car brand' }}
+          </option>
 
-        <option value="">
-          {{ brand ? 'Choose car model' : 'First choose car brand' }}
-        </option>
+          <option *ngFor="let item of (brand ? carModels[brand] : [])" [value]="item">
+            {{ item }}
+          </option>
 
-        <option *ngFor="let item of (brand ? carModels[brand] : [])" [value]="item">
-          {{ item }}
-        </option>
-
-      </select>
+        </select>
+      </div>
 
     </div>
 
@@ -186,29 +153,29 @@
 
     </div>
 
-    <div class="field">
+    <div class="row-2">
 
-  <label>Full Name</label>
+      <div class="field">
+        <label>Full Name</label>
 
-  <input
-    type="text"
-    name="customerName"
-    [(ngModel)]="customerName"
-    placeholder="Enter your name"
-    required>
+        <input
+          type="text"
+          name="customerName"
+          [(ngModel)]="customerName"
+          placeholder="Enter your name"
+          required>
+      </div>
 
-    </div>
+      <div class="field">
+        <label>Mobile Number *</label>
 
-    <div class="field">
-
-      <label>Mobile Number *</label>
-
-      <input
-        [(ngModel)]="mobile"
-        type="tel"
-        maxlength="10"
-        placeholder="10-digit mobile number"
-      >
+        <input
+          [(ngModel)]="mobile"
+          type="tel"
+          maxlength="10"
+          placeholder="10-digit mobile number"
+        >
+      </div>
 
     </div>
 
@@ -245,7 +212,15 @@
 
       <div class="photo-preview" *ngIf="previewUrls.length">
 
-        <img *ngFor="let url of previewUrls" [src]="url">
+        <div class="photo-item" *ngFor="let url of previewUrls; let i = index">
+          <img [src]="url">
+          <button
+            type="button"
+            class="photo-remove"
+            (click)="removePhoto(i)"
+            aria-label="Remove photo"
+          >✕</button>
+        </div>
 
       </div>
 
@@ -271,4 +246,9 @@
 
   </div>
 
+</div>
+
+<div class="mobile-cta">
+  <a class="call" href="tel:+918979111277">📞 Call Now</a>
+  <a class="whatsapp" href="https://wa.me/918979111277" target="_blank">💬 WhatsApp</a>
 </div>
