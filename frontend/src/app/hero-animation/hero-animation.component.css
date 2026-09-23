@@ -910,6 +910,45 @@
 }
 
 
+@keyframes dentShadowIn {
+  from {
+    opacity: 0;
+    transform: scale(.65);
+  }
+
+  to {
+    opacity: .28;
+    transform: scale(1);
+  }
+}
+
+@keyframes dentShadowRepair {
+  0% {
+    opacity: .28;
+    transform: scale(1);
+  }
+
+  70% {
+    opacity: .08;
+    transform: scale(.35);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(.05);
+  }
+}
+
+@keyframes dentEdgeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 /* =========================
    MOBILE
 ========================= */
