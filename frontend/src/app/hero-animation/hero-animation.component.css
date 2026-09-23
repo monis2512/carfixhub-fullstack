@@ -170,7 +170,7 @@
   stroke-width: 3;
 }
 
-.dent {
+/*.dent {
   fill: rgba(100,116,139,.22);
   stroke: #64748b;
   stroke-width: 2;
@@ -189,6 +189,69 @@
   opacity: .55;
 
   animation: dentDisappear .8s ease 3.1s forwards;
+}*/
+
+/* =========================
+   REALISTIC BODY DENT
+========================= */
+
+.dent-shadow {
+  fill: #475569;
+  opacity: .28;
+  filter: blur(5px);
+
+  transform-origin: 288px 170px;
+
+  animation:
+    dentShadowIn .6s ease forwards,
+    dentShadowRepair .9s ease 3.1s forwards;
+}
+
+.dent {
+  fill: url(#dentGradient);
+  opacity: .92;
+
+  transform-origin: 288px 170px;
+
+  animation:
+    dentVisible .7s ease forwards,
+    dentRepair .9s ease 3.1s forwards;
+}
+
+.dent-edge {
+  fill: none;
+  stroke: #64748b;
+  stroke-width: 4;
+  opacity: .55;
+
+  filter: blur(.4px);
+
+  animation:
+    dentEdgeIn .7s ease forwards,
+    dentDisappear .9s ease 3.1s forwards;
+}
+
+.dent-bottom {
+  fill: none;
+  stroke: #334155;
+  stroke-width: 3;
+  opacity: .38;
+
+  animation:
+    dentEdgeIn .7s ease forwards,
+    dentDisappear .9s ease 3.1s forwards;
+}
+
+.dent-highlight {
+  fill: none;
+  stroke: rgba(255,255,255,.85);
+  stroke-width: 4;
+  stroke-linecap: round;
+  opacity: .65;
+
+  animation:
+    dentEdgeIn .7s ease forwards,
+    dentDisappear .9s ease 3.1s forwards;
 }
 
 .repair-highlight {
