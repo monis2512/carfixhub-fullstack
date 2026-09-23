@@ -135,7 +135,7 @@
    CAR
 ========================= */
 
-.car {
+/*.car {
   position: absolute;
   z-index: 2;
 
@@ -143,6 +143,21 @@
   bottom: 22px;
 
   width: min(620px, 96%);
+  height: auto;
+
+  transform: translateX(-50%) translateX(100%);
+  animation: carEnter 1.4s cubic-bezier(.2,.8,.2,1) forwards;
+}*/
+
+.car {
+  position: absolute;
+  z-index: 2;
+
+  left: 50%;
+  bottom: 22px;
+
+  width: 94%;
+  max-width: 620px;
   height: auto;
 
   transform: translateX(-50%) translateX(100%);
