@@ -101,24 +101,19 @@
 
   <span class="eyebrow">Our Work</span>
   <h2>Before &amp; After</h2>
-  <p class="sub">Drag the slider to see the difference our team makes.</p>
-
-  <div class="ba-tabs">
-    <button
-      type="button"
-      class="ba-tab"
-      *ngFor="let ex of beforeAfterExamples; let i = index"
-      [class.active]="i === activeExample"
-      (click)="selectExample(i)"
-    >
-      {{ ex.label }}
-    </button>
-  </div>
+  <p class="sub">Drag the slider to see the kind of difference our team makes.</p>
 
   <div class="ba-slider" [style.--pos]="sliderPosition + '%'">
 
-    <div class="ba-layer ba-after" [style.backgroundImage]="'url(' + beforeAfterExamples[activeExample].after + ')'"></div>
-    <div class="ba-layer ba-before" [style.backgroundImage]="'url(' + beforeAfterExamples[activeExample].before + ')'"></div>
+    <!-- AFTER: clean, repaired -->
+    <div class="ba-layer ba-after">
+      <img src="assets/before-after/after-dent.svg" alt="Car after repair" class="ba-img">
+    </div>
+
+    <!-- BEFORE: dented, dull -->
+    <div class="ba-layer ba-before">
+      <img src="assets/before-after/before-dent.svg" alt="Car before repair" class="ba-img">
+    </div>
 
     <span class="ba-tag ba-tag-before">Before</span>
     <span class="ba-tag ba-tag-after">After</span>
@@ -138,6 +133,8 @@
     >
 
   </div>
+
+  <p class="ba-caption">Illustrative example — real customer repair photos coming soon.</p>
 
 </section>
 
@@ -352,10 +349,10 @@
       </button>
     </div>
 
-   <!-- <div class="contact">
+    <div class="contact">
       <a href="tel:+918979111277">📞 Call</a>
       <a href="https://wa.me/918979111277" target="_blank">💬 WhatsApp</a>
-    </div> -->
+    </div>
 
     <p class="address">
       Khanalampura, opposite Dr Shamshad, Saharanpur - 247001
