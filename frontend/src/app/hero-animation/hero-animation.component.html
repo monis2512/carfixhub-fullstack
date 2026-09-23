@@ -1,46 +1,283 @@
 <section class="hero-animation">
-
   <div class="scene">
 
-    <!-- Mechanic -->
+    <!-- Workshop floor -->
+    <div class="floor"></div>
 
-    <div class="worker">
-      <div class="head"></div>
-      <div class="body"></div>
-      <div class="arm"></div>
-      <div class="leg left"></div>
-      <div class="leg right"></div>
-      <div class="hammer"></div>
+    <!-- Soft workshop light -->
+    <div class="workshop-glow"></div>
+
+    <!-- Tool trolley -->
+    <div class="tool-cart">
+      <div class="cart-top"></div>
+      <div class="cart-body">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="cart-wheel left"></div>
+      <div class="cart-wheel right"></div>
     </div>
 
-    <!-- Paint Spray -->
-
-    <div class="spray"></div>
-
-    <!-- Sparkle -->
-
-    <div class="sparkle">✨</div>
-
     <!-- Car -->
+    <svg class="car" viewBox="0 0 720 300" aria-label="Car dent repair">
 
-    <svg class="car" viewBox="0 0 420 170">
+      <defs>
+        <linearGradient id="carPaint" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="45%" stop-color="#f8fafc"/>
+          <stop offset="75%" stop-color="#dbe4ef"/>
+          <stop offset="100%" stop-color="#b8c5d5"/>
+        </linearGradient>
 
-      <path class="car-body"
-        d="M40 105 L85 65 L250 55 L305 78 L360 78 L390 102 L390 125 L32 125 Z"/>
+        <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#dff3ff"/>
+          <stop offset="45%" stop-color="#8eb9d8"/>
+          <stop offset="100%" stop-color="#31485f"/>
+        </linearGradient>
 
-      <rect class="window" x="115" y="66" width="105" height="30" rx="8"/>
+        <linearGradient id="tire" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#374151"/>
+          <stop offset="100%" stop-color="#080d16"/>
+        </linearGradient>
 
-      <rect class="window" x="225" y="66" width="55" height="28" rx="8"/>
+        <radialGradient id="rim">
+          <stop offset="0%" stop-color="#f8fafc"/>
+          <stop offset="45%" stop-color="#94a3b8"/>
+          <stop offset="100%" stop-color="#334155"/>
+        </radialGradient>
+
+        <filter id="carShadow">
+          <feDropShadow
+            dx="0"
+            dy="12"
+            stdDeviation="10"
+            flood-opacity=".22"/>
+        </filter>
+      </defs>
+
+      <!-- Shadow -->
+      <ellipse
+        cx="365"
+        cy="265"
+        rx="300"
+        ry="18"
+        fill="#64748b"
+        opacity=".22"/>
+
+      <!-- Main body -->
+      <path
+        class="car-body"
+        filter="url(#carShadow)"
+        d="
+        M65 202
+        L100 155
+        L170 135
+        L235 78
+        Q255 60 286 57
+        L440 57
+        Q468 58 490 76
+        L540 119
+        L625 135
+        Q657 142 675 167
+        L688 202
+        L684 225
+        L58 225
+        Z"/>
+
+      <!-- Roof highlight -->
+      <path
+        d="M226 82
+           Q248 62 280 61
+           L438 61
+           Q462 62 482 78
+           L515 110
+           L210 110 Z"
+        fill="#ffffff"
+        opacity=".72"/>
+
+      <!-- Front windshield -->
+      <path
+        d="M366 67
+           L440 67
+           Q460 68 475 82
+           L505 111
+           L368 111 Z"
+        fill="url(#glass)"
+        stroke="#64748b"
+        stroke-width="3"/>
+
+      <!-- Side window -->
+      <path
+        d="M235 82
+           Q249 66 279 64
+           L356 64
+           L356 111
+           L202 111
+           Z"
+        fill="url(#glass)"
+        stroke="#64748b"
+        stroke-width="3"/>
+
+      <!-- Window divider -->
+      <path
+        d="M360 65 L360 113"
+        stroke="#334155"
+        stroke-width="5"/>
+
+      <!-- Door lines -->
+      <path
+        d="M198 113 L196 207
+           M360 113 L361 207
+           M514 119 L520 204"
+        fill="none"
+        stroke="#94a3b8"
+        stroke-width="2"
+        opacity=".75"/>
+
+      <!-- Door handle -->
+      <rect
+        x="328"
+        y="135"
+        width="35"
+        height="6"
+        rx="3"
+        fill="#64748b"/>
+
+      <!-- Side mirror -->
+      <path
+        d="M200 111
+           Q181 104 171 116
+           Q181 128 202 123 Z"
+        fill="#dbe4ef"
+        stroke="#64748b"
+        stroke-width="3"/>
+
+      <!-- Headlight -->
+      <path
+        d="M613 157
+           Q650 161 670 180
+           L671 196
+           L620 190
+           Q611 174 613 157 Z"
+        fill="#eaf7ff"
+        stroke="#64748b"
+        stroke-width="3"/>
+
+      <path
+        d="M626 169 L658 181"
+        stroke="#60a5fa"
+        stroke-width="6"
+        opacity=".85"/>
+
+      <!-- Front grille -->
+      <path
+        d="M665 190 L686 196 L682 218 L644 218 Z"
+        fill="#111827"/>
+
+      <path
+        d="M652 202 L679 207"
+        stroke="#64748b"
+        stroke-width="3"/>
+
+      <!-- Rear light -->
+      <path
+        d="M73 170 L104 164 L96 193 L67 198 Z"
+        fill="#ef4444"
+        opacity=".9"/>
 
       <!-- Dent -->
+      <ellipse
+        class="dent"
+        cx="288"
+        cy="172"
+        rx="43"
+        ry="25"/>
 
-      <circle class="dent" cx="210" cy="103" r="10"/>
+      <path
+        class="dent-line"
+        d="M250 171 Q288 195 326 170"
+      />
 
-      <circle class="wheel" cx="95" cy="128" r="20"/>
-      <circle class="wheel" cx="310" cy="128" r="20"/>
+      <!-- Wheels -->
+      <g class="wheel-group">
+        <circle cx="175" cy="224" r="42" fill="url(#tire)"/>
+        <circle cx="175" cy="224" r="27" fill="url(#rim)"/>
+        <circle cx="175" cy="224" r="9" fill="#475569"/>
+        <path d="M175 201 L175 247 M152 224 L198 224"
+              stroke="#64748b" stroke-width="4"/>
+      </g>
 
+      <g class="wheel-group">
+        <circle cx="550" cy="224" r="42" fill="url(#tire)"/>
+        <circle cx="550" cy="224" r="27" fill="url(#rim)"/>
+        <circle cx="550" cy="224" r="9" fill="#475569"/>
+        <path d="M550 201 L550 247 M527 224 L573 224"
+              stroke="#64748b" stroke-width="4"/>
+      </g>
+
+      <!-- Blue repair highlight -->
+      <path
+        class="repair-highlight"
+        d="M245 150 Q288 125 330 151"
+      />
     </svg>
 
-  </div>
 
+    <!-- Mechanic -->
+    <div class="mechanic">
+
+      <div class="mechanic-head">
+        <div class="hair"></div>
+        <div class="ear"></div>
+      </div>
+
+      <div class="neck"></div>
+
+      <div class="mechanic-body">
+        <div class="shirt-logo">CFH</div>
+      </div>
+
+      <div class="mechanic-arm back-arm"></div>
+
+      <div class="mechanic-arm front-arm">
+        <div class="glove"></div>
+      </div>
+
+      <div class="mechanic-leg back-leg"></div>
+      <div class="mechanic-leg front-leg"></div>
+
+      <div class="shoe back-shoe"></div>
+      <div class="shoe front-shoe"></div>
+
+      <!-- Dent repair tool -->
+      <div class="repair-tool">
+        <div class="tool-handle"></div>
+        <div class="tool-head"></div>
+      </div>
+    </div>
+
+
+    <!-- Paint spray -->
+    <div class="paint-spray">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+
+    <!-- Repair sparks -->
+    <div class="repair-sparks">
+      <span>✦</span>
+      <span>✦</span>
+      <span>✧</span>
+    </div>
+
+
+    <!-- Final shine -->
+    <div class="car-shine">✦</div>
+
+  </div>
 </section>
