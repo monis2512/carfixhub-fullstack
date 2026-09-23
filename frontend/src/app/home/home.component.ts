@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { RouterLink } from '@angular/router';
@@ -8,16 +8,41 @@ import { APP_CONFIG } from '../core/app-config';
 import { CloudinaryService } from '../core/cloudinary.service';
 import { HeroAnimationComponent } from '../hero-animation/hero-animation.component';
 
+interface Testimonial {
+  name: string;
+  car: string;
+  rating: number;
+  quote: string;
+}
+
+interface StatItem {
+  label: string;
+  target: number;
+  suffix: string;
+  current: number;
+}
+
+interface BeforeAfterExample {
+  label: string;
+  before: string;
+  after: string;
+}
+
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink,HeroAnimationComponent],
+  imports: [CommonModule, FormsModule, RouterLink, HeroAnimationComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements AfterViewInit, OnDestroy {
   private readonly api = inject(ApiService);
   private readonly cloudinary = inject(CloudinaryService);
+
+  @ViewChild('statsSection') statsSection?: ElementRef<HTMLElement>;
+
+  readonly currentYear = new Date().getFullYear();
+  readonly ratingStars = [1, 2, 3, 4, 5];
 
   readonly carModels: Record<string, string[]> = {
     'Maruti Suzuki': ['Alto K10','S-Presso','Celerio','WagonR','Swift','Dzire','Baleno','Fronx','Brezza','Grand Vitara','Ertiga','XL6','Invicto','Jimny','Ignis','Eeco'],
@@ -64,6 +89,7 @@ export class HomeComponent {
     { value: 'Denting & Painting', label: '🚗 All' }
   ];
 
+  // ===== Enquiry form =====
   brand = '';
   model = '';
   service = '';
@@ -77,6 +103,127 @@ export class HomeComponent {
   sending = false;
   uploadText = 'Send Enquiry';
 
+  // ===== Form wizard =====
+  currentStep = 1;
+  readonly totalSteps = 3;
+  readonly stepLabels = ['Your Car', 'The Damage', 'Contact Info'];
+
+  // ===== Success modal =====
+  showSuccessModal = false;
+  lastCustomerName = '';
+  lastMobile = '';
+
+  // ===== Testimonials =====
+  readonly testimonials: Testimonial[] = [
+    { name: 'Rohit Sharma', car: 'Hyundai Creta', rating: 5, quote: "The dent on my bumper looked factory-new after CarFixHub was done. You genuinely can't tell it was ever damaged." },
+    { name: 'Ayesha Khan', car: 'Maruti Baleno', rating: 5, quote: 'Quick turnaround and the paint match was perfect on the first try. Very professional team throughout.' },
+    { name: 'Vikram Singh', car: 'Tata Nexon', rating: 4, quote: 'Fair, honest pricing — they only fixed what actually needed fixing instead of upselling extra work.' },
+    { name: 'Neha Gupta', car: 'Honda City', rating: 5, quote: 'Sent a few photos on WhatsApp, had a quote within minutes, and the finish is spotless. Highly recommend.' }
+  ];
+  activeTestimonial = 0;
+  private testimonialTimer?: ReturnType<typeof setInterval>;
+
+  // ===== Stats strip =====
+  stats: StatItem[] = [
+    { label: 'Cars Repaired', target: 500, suffix: '+', current: 0 },
+    { label: 'Years Experience', target: 10, suffix: '+', current: 0 },
+    { label: 'Average Rating', target: 4.8, suffix: '★', current: 0 },
+    { label: 'Same-Day Quotes', target: 95, suffix: '%', current: 0 }
+  ];
+  private statsAnimated = false;
+  private statsObserver?: IntersectionObserver;
+
+  // ===== Before / after gallery =====
+  readonly beforeAfterExamples: BeforeAfterExample[] = [
+    { label: 'Bumper Dent', before: 'assets/before-after/bumper-before.jpg', after: 'assets/before-after/bumper-after.jpg' },
+    { label: 'Door Scratch', before: 'assets/before-after/door-before.jpg', after: 'assets/before-after/door-after.jpg' },
+    { label: 'Full Repaint', before: 'assets/before-after/paint-before.jpg', after: 'assets/before-after/paint-after.jpg' }
+  ];
+  activeExample = 0;
+  sliderPosition = 50;
+
+  ngAfterViewInit(): void {
+    if (this.statsSection) {
+      this.statsObserver = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && !this.statsAnimated) {
+              this.statsAnimated = true;
+              this.animateStats();
+            }
+          });
+        },
+        { threshold: 0.4 }
+      );
+      this.statsObserver.observe(this.statsSection.nativeElement);
+    }
+
+    this.startTestimonialAutoplay();
+  }
+
+  ngOnDestroy(): void {
+    this.statsObserver?.disconnect();
+    this.stopTestimonialAutoplay();
+  }
+
+  private animateStats(): void {
+    const duration = 1400;
+    const start = performance.now();
+    const targets = this.stats.map(s => s.target);
+
+    const tick = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+
+      this.stats.forEach((stat, i) => {
+        stat.current = Math.round(targets[i] * eased * 10) / 10;
+      });
+
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        this.stats.forEach((stat, i) => (stat.current = targets[i]));
+      }
+    };
+
+    requestAnimationFrame(tick);
+  }
+
+  // ===== Testimonials controls =====
+  startTestimonialAutoplay(): void {
+    this.stopTestimonialAutoplay();
+    this.testimonialTimer = setInterval(() => this.nextTestimonial(), 5000);
+  }
+
+  stopTestimonialAutoplay(): void {
+    if (this.testimonialTimer) clearInterval(this.testimonialTimer);
+  }
+
+  nextTestimonial(): void {
+    this.activeTestimonial = (this.activeTestimonial + 1) % this.testimonials.length;
+  }
+
+  prevTestimonial(): void {
+    this.activeTestimonial = (this.activeTestimonial - 1 + this.testimonials.length) % this.testimonials.length;
+  }
+
+  goToTestimonial(i: number): void {
+    this.activeTestimonial = i;
+    this.startTestimonialAutoplay();
+  }
+
+  // ===== Before/after controls =====
+  selectExample(i: number): void {
+    this.activeExample = i;
+    this.sliderPosition = 50;
+  }
+
+  onSliderInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.sliderPosition = Number(input.value);
+  }
+
+  // ===== Existing form logic =====
   onBrandChange(): void {
     this.model = '';
   }
@@ -124,16 +271,56 @@ export class HomeComponent {
     this.selectedFiles.splice(index, 1);
   }
 
-  async submit(): Promise<void> {
+  // ===== Wizard navigation =====
+  nextStep(): void {
+    if (!this.validateStep(this.currentStep)) return;
+    if (this.currentStep < this.totalSteps) this.currentStep++;
+    document.getElementById('repairForm')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  prevStep(): void {
+    if (this.currentStep > 1) this.currentStep--;
+  }
+
+  goToStep(step: number): void {
+    if (step < this.currentStep) this.currentStep = step;
+  }
+
+  private validateStep(step: number): boolean {
     this.status = '';
 
-    if (!this.brand) return this.validation('Please select your car brand.', 'brand');
-    if (!this.model) return this.validation('Please select your car model.', 'model');
-    if (!this.service) return this.validation('Please select a service.', 'service');
+    if (step === 1) {
+      if (!this.brand) return this.fail('Please select your car brand.', 'brand');
+      if (!this.model) return this.fail('Please select your car model.', 'model');
+    }
 
-    const mobile = this.mobile.replace(/\s+/g, '').trim();
-    if (!/^[6-9]\d{9}$/.test(mobile)) return this.validation('Please enter a valid 10-digit Indian mobile number.', 'mobile');
-    if (!this.description.trim()) return this.validation('Please describe the damage.', 'description');
+    if (step === 2) {
+      if (!this.service) return this.fail('Please select a service.', 'service');
+      if (!this.description.trim()) return this.fail('Please describe the damage.', 'description');
+    }
+
+    if (step === 3) {
+      const mobile = this.mobile.replace(/\s+/g, '').trim();
+      if (!/^[6-9]\d{9}$/.test(mobile)) return this.fail('Please enter a valid 10-digit Indian mobile number.', 'mobile');
+    }
+
+    return true;
+  }
+
+  private fail(message: string, id: string): boolean {
+    this.showError(message);
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    document.getElementById(id)?.focus();
+    return false;
+  }
+
+  async submit(): Promise<void> {
+    for (let step = 1; step <= this.totalSteps; step++) {
+      if (!this.validateStep(step)) {
+        this.currentStep = step;
+        return;
+      }
+    }
 
     if (this.selectedFiles.length > APP_CONFIG.maxPhotos) {
       this.showError(`You can upload a maximum of ${APP_CONFIG.maxPhotos} pictures.`);
@@ -156,8 +343,8 @@ export class HomeComponent {
       await firstValueFrom(this.api.submitEnquiry({
         carModel: `${this.brand} - ${this.model}`,
         serviceType: this.service,
-        customerName : this.customerName.trim(),
-        mobileNumber: mobile,
+        customerName: this.customerName.trim(),
+        mobileNumber: this.mobile.replace(/\s+/g, '').trim(),
         description: this.description.trim(),
         photoName: this.selectedFiles.map(file => file.name).join(', '),
         photoUrl1: photoUrls[0] ?? '',
@@ -165,9 +352,10 @@ export class HomeComponent {
         photoUrl3: photoUrls[2] ?? ''
       }));
 
-      alert('Your query has been submitted successfully. You will be contacted soon.');
+      this.lastCustomerName = this.customerName.trim();
+      this.lastMobile = this.mobile.replace(/\s+/g, '').trim();
+      this.showSuccessModal = true;
       this.reset();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : 'Unable to submit enquiry.';
       this.showError(message);
@@ -177,10 +365,9 @@ export class HomeComponent {
     }
   }
 
-  private validation(message: string, id: string): void {
-    this.showError(message);
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    document.getElementById(id)?.focus();
+  closeSuccessModal(): void {
+    this.showSuccessModal = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   private showError(message: string): void {
@@ -198,8 +385,7 @@ export class HomeComponent {
     this.description = '';
     this.clearPreviews();
     this.selectedFiles = [];
-    const fileInput = document.getElementById('photo') as HTMLInputElement | null;
-    if (fileInput) fileInput.value = '';
+    this.currentStep = 1;
     this.status = '';
   }
 
@@ -208,18 +394,18 @@ export class HomeComponent {
     this.previewUrls = [];
   }
 
-  scrollToForm() {
-    document.getElementById('repairForm')?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
+  // ===== Section navigation =====
+  scrollTo(id: string): void {
+    if (id === 'top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  scrollToServices() {
-    document.getElementById('services')?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
-  }
-
+  scrollToForm(): void { this.scrollTo('repairForm'); }
+  scrollToServices(): void { this.scrollTo('services'); }
+  scrollToGallery(): void { this.scrollTo('gallery'); }
+  scrollToReviews(): void { this.scrollTo('reviews'); }
+  scrollToTop(): void { this.scrollTo('top'); }
 }
