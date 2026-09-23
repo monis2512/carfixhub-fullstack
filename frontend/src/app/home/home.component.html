@@ -1,8 +1,17 @@
 <header class="site-header">
-  <a class="brand-mark" routerLink="/">
+  <a class="brand-mark" (click)="scrollToTop()">
     <span class="dot"></span>
     CarFixHub
   </a>
+
+  <nav class="site-nav">
+    <a (click)="scrollToTop()">Home</a>
+    <a (click)="scrollToServices()">Services</a>
+    <a (click)="scrollToGallery()">Gallery</a>
+    <a (click)="scrollToReviews()">Reviews</a>
+    <a (click)="scrollToForm()">Contact</a>
+  </nav>
+
   <a class="admin-login" routerLink="/admin">Admin Login</a>
 </header>
 
@@ -88,6 +97,109 @@
 
 </section>
 
+<section class="gallery-section" id="gallery">
+
+  <span class="eyebrow">Our Work</span>
+  <h2>Before &amp; After</h2>
+  <p class="sub">Drag the slider to see the difference our team makes.</p>
+
+  <div class="ba-tabs">
+    <button
+      type="button"
+      class="ba-tab"
+      *ngFor="let ex of beforeAfterExamples; let i = index"
+      [class.active]="i === activeExample"
+      (click)="selectExample(i)"
+    >
+      {{ ex.label }}
+    </button>
+  </div>
+
+  <div class="ba-slider" [style.--pos]="sliderPosition + '%'">
+
+    <div class="ba-layer ba-after" [style.backgroundImage]="'url(' + beforeAfterExamples[activeExample].after + ')'"></div>
+    <div class="ba-layer ba-before" [style.backgroundImage]="'url(' + beforeAfterExamples[activeExample].before + ')'"></div>
+
+    <span class="ba-tag ba-tag-before">Before</span>
+    <span class="ba-tag ba-tag-after">After</span>
+
+    <div class="ba-handle">
+      <span class="ba-handle-grip">⇔</span>
+    </div>
+
+    <input
+      type="range"
+      class="ba-range"
+      min="0"
+      max="100"
+      [value]="sliderPosition"
+      (input)="onSliderInput($event)"
+      aria-label="Drag to compare before and after"
+    >
+
+  </div>
+
+</section>
+
+<section class="stats-section" #statsSection>
+  <div class="stat" *ngFor="let s of stats">
+    <div class="stat-value">{{ s.current }}{{ s.suffix }}</div>
+    <div class="stat-label">{{ s.label }}</div>
+  </div>
+</section>
+
+<section class="reviews-section" id="reviews">
+
+  <span class="eyebrow">Testimonials</span>
+  <h2>What Our Customers Say</h2>
+
+  <div
+    class="testimonial-carousel"
+    (mouseenter)="stopTestimonialAutoplay()"
+    (mouseleave)="startTestimonialAutoplay()"
+  >
+
+    <button class="carousel-arrow prev" (click)="prevTestimonial()" aria-label="Previous testimonial">‹</button>
+
+    <div class="testimonial-track" [style.transform]="'translateX(-' + (activeTestimonial * 100) + '%)'">
+
+      <div class="testimonial-card" *ngFor="let t of testimonials">
+
+        <div class="stars">
+          <span *ngFor="let i of ratingStars" [class.filled]="i <= t.rating">★</span>
+        </div>
+
+        <p class="quote">"{{ t.quote }}"</p>
+
+        <div class="testimonial-author">
+          <div class="avatar">{{ t.name.charAt(0) }}</div>
+          <div>
+            <div class="name">{{ t.name }}</div>
+            <div class="car">{{ t.car }}</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <button class="carousel-arrow next" (click)="nextTestimonial()" aria-label="Next testimonial">›</button>
+
+  </div>
+
+  <div class="carousel-dots">
+    <button
+      type="button"
+      class="dot"
+      *ngFor="let t of testimonials; let i = index"
+      [class.active]="i === activeTestimonial"
+      (click)="goToTestimonial(i)"
+      [attr.aria-label]="'Go to testimonial ' + (i + 1)"
+    ></button>
+  </div>
+
+</section>
+
 <div class="wrap">
 
   <div class="card" id="repairForm">
@@ -95,150 +207,155 @@
     <h2>Request a Repair</h2>
     <p class="form-sub">Tell us about your car and the damage — we'll get back to you shortly.</p>
 
+    <div class="stepper">
+      <div
+        class="step"
+        *ngFor="let label of stepLabels; let i = index"
+        [class.active]="currentStep === i + 1"
+        [class.done]="currentStep > i + 1"
+        (click)="goToStep(i + 1)"
+      >
+        <div class="step-circle">
+          <span *ngIf="currentStep > i + 1">✓</span>
+          <span *ngIf="currentStep <= i + 1">{{ i + 1 }}</span>
+        </div>
+        <div class="step-label">{{ label }}</div>
+      </div>
+    </div>
+
     <div id="status" class="status" [class.error]="status && !statusOk" [class.success]="statusOk">
       {{ status }}
     </div>
 
-    <div class="row-2">
+    <!-- STEP 1: Car -->
+    <div class="step-panel" *ngIf="currentStep === 1">
 
-      <div class="field">
-        <label>Car Brand</label>
+      <div class="row-2">
 
-        <select [(ngModel)]="brand" (ngModelChange)="onBrandChange()">
+        <div class="field">
+          <label>Car Brand</label>
 
-          <option value="">Choose car brand</option>
+          <select [(ngModel)]="brand" (ngModelChange)="onBrandChange()">
+            <option value="">Choose car brand</option>
+            <option *ngFor="let item of brands" [value]="item">{{ item }}</option>
+          </select>
+        </div>
 
-          <option *ngFor="let item of brands" [value]="item">
-            {{ item }}
-          </option>
+        <div class="field">
+          <label>Car Model</label>
 
-        </select>
-      </div>
-
-      <div class="field">
-        <label>Car Model</label>
-
-        <select [(ngModel)]="model" [disabled]="!brand">
-
-          <option value="">
-            {{ brand ? 'Choose car model' : 'First choose car brand' }}
-          </option>
-
-          <option *ngFor="let item of (brand ? carModels[brand] : [])" [value]="item">
-            {{ item }}
-          </option>
-
-        </select>
-      </div>
-
-    </div>
-
-    <div class="field">
-
-      <label>Service Required</label>
-
-      <div class="services">
-
-        <button
-          type="button"
-          class="service"
-          *ngFor="let item of services"
-          [class.active]="service===item.value"
-          (click)="selectService(item.value)"
-        >
-          {{ item.label }}
-        </button>
-
-      </div>
-
-    </div>
-
-    <div class="row-2">
-
-      <div class="field">
-        <label>Full Name</label>
-
-        <input
-          type="text"
-          name="customerName"
-          [(ngModel)]="customerName"
-          placeholder="Enter your name"
-          required>
-      </div>
-
-      <div class="field">
-        <label>Mobile Number *</label>
-
-        <input
-          [(ngModel)]="mobile"
-          type="tel"
-          maxlength="10"
-          placeholder="10-digit mobile number"
-        >
-      </div>
-
-    </div>
-
-    <div class="field">
-
-      <label>Describe the damage *</label>
-
-      <textarea
-        [(ngModel)]="description"
-        maxlength="1000"
-        placeholder="Example: Front bumper has a dent..."
-      ></textarea>
-
-      <div class="counter">
-        {{ description.length }}/1000
-      </div>
-
-    </div>
-
-    <div class="field">
-
-      <label>Damage Photos (Optional)</label>
-
-      <input
-        type="file"
-        accept="image/jpeg,image/png,image/webp"
-        multiple
-        (change)="onFilesSelected($event)"
-      >
-
-      <div class="photo-note">
-        Maximum 3 photos • 5 MB each
-      </div>
-
-      <div class="photo-preview" *ngIf="previewUrls.length">
-
-        <div class="photo-item" *ngFor="let url of previewUrls; let i = index">
-          <img [src]="url">
-          <button
-            type="button"
-            class="photo-remove"
-            (click)="removePhoto(i)"
-            aria-label="Remove photo"
-          >✕</button>
+          <select [(ngModel)]="model" [disabled]="!brand">
+            <option value="">{{ brand ? 'Choose car model' : 'First choose car brand' }}</option>
+            <option *ngFor="let item of (brand ? carModels[brand] : [])" [value]="item">{{ item }}</option>
+          </select>
         </div>
 
       </div>
 
     </div>
 
-    <button class="submit" [disabled]="sending" (click)="submit()">
-      {{ uploadText }}
-    </button>
+    <!-- STEP 2: Damage -->
+    <div class="step-panel" *ngIf="currentStep === 2">
 
-    <!--<div class="contact">
+      <div class="field">
+        <label>Service Required</label>
 
+        <div class="services">
+          <button
+            type="button"
+            class="service"
+            *ngFor="let item of services"
+            [class.active]="service === item.value"
+            (click)="selectService(item.value)"
+          >
+            {{ item.label }}
+          </button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Describe the damage *</label>
+
+        <textarea
+          [(ngModel)]="description"
+          maxlength="1000"
+          placeholder="Example: Front bumper has a dent..."
+        ></textarea>
+
+        <div class="counter">{{ description.length }}/1000</div>
+      </div>
+
+      <div class="field">
+        <label>Damage Photos (Optional)</label>
+
+        <input
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          multiple
+          (change)="onFilesSelected($event)"
+        >
+
+        <div class="photo-note">Maximum 3 photos • 5 MB each</div>
+
+        <div class="photo-preview" *ngIf="previewUrls.length">
+          <div class="photo-item" *ngFor="let url of previewUrls; let i = index">
+            <img [src]="url">
+            <button type="button" class="photo-remove" (click)="removePhoto(i)" aria-label="Remove photo">✕</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- STEP 3: Contact -->
+    <div class="step-panel" *ngIf="currentStep === 3">
+
+      <div class="row-2">
+
+        <div class="field">
+          <label>Full Name</label>
+
+          <input
+            type="text"
+            name="customerName"
+            [(ngModel)]="customerName"
+            placeholder="Enter your name"
+            required>
+        </div>
+
+        <div class="field">
+          <label>Mobile Number *</label>
+
+          <input
+            [(ngModel)]="mobile"
+            type="tel"
+            maxlength="10"
+            placeholder="10-digit mobile number"
+          >
+        </div>
+
+      </div>
+
+      <div class="review-summary">
+        <div class="review-row"><span>Car</span><strong>{{ brand }} {{ model }}</strong></div>
+        <div class="review-row"><span>Service</span><strong>{{ service || '—' }}</strong></div>
+        <div class="review-row"><span>Photos</span><strong>{{ selectedFiles.length }} attached</strong></div>
+      </div>
+
+    </div>
+
+    <div class="wizard-nav">
+      <button type="button" class="secondary-btn" *ngIf="currentStep > 1" (click)="prevStep()">← Back</button>
+      <button type="button" class="primary-btn" *ngIf="currentStep < totalSteps" (click)="nextStep()">Continue →</button>
+      <button type="button" class="submit" *ngIf="currentStep === totalSteps" [disabled]="sending" (click)="submit()">
+        {{ uploadText }}
+      </button>
+    </div>
+
+    <div class="contact">
       <a href="tel:+918979111277">📞 Call</a>
-
-      <a href="https://wa.me/918979111277" target="_blank">
-        💬 WhatsApp
-      </a>
-
-    </div>-->
+      <a href="https://wa.me/918979111277" target="_blank">💬 WhatsApp</a>
+    </div>
 
     <p class="address">
       Khanalampura, opposite Dr Shamshad, Saharanpur - 247001
@@ -248,7 +365,63 @@
 
 </div>
 
+<footer class="site-footer">
+
+  <div class="footer-grid">
+
+    <div class="footer-col">
+      <div class="brand-mark light">
+        <span class="dot"></span>
+        CarFixHub
+      </div>
+      <p>Professional denting, painting and scratch repair — restoring your car's finish, one panel at a time.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a (click)="scrollToTop()">Home</a>
+      <a (click)="scrollToServices()">Services</a>
+      <a (click)="scrollToGallery()">Gallery</a>
+      <a (click)="scrollToReviews()">Reviews</a>
+      <a (click)="scrollToForm()">Get a Quote</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="tel:+918979111277">📞 +91 89791 11277</a>
+      <a href="https://wa.me/918979111277" target="_blank">💬 WhatsApp Us</a>
+      <p>Khanalampura, opposite Dr Shamshad,<br>Saharanpur - 247001</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Working Hours</h4>
+      <p>Mon – Sat: 9:00 AM – 7:00 PM</p>
+      <p>Sunday: Closed</p>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © {{ currentYear }} CarFixHub. All rights reserved.
+  </div>
+
+</footer>
+
 <div class="mobile-cta">
   <a class="call" href="tel:+918979111277">📞 Call Now</a>
   <a class="whatsapp" href="https://wa.me/918979111277" target="_blank">💬 WhatsApp</a>
+</div>
+
+<a class="whatsapp-bubble" href="https://wa.me/918979111277" target="_blank" aria-label="Chat on WhatsApp">💬</a>
+
+<div class="modal-backdrop" *ngIf="showSuccessModal" (click)="closeSuccessModal()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <div class="modal-check">✓</div>
+    <h3>Enquiry Sent!</h3>
+    <p>
+      Thanks{{ lastCustomerName ? ', ' + lastCustomerName : '' }} — we've received your request
+      and will contact you shortly{{ lastMobile ? ' on ' + lastMobile : '' }}.
+    </p>
+    <button type="button" class="primary-btn" (click)="closeSuccessModal()">Done</button>
+  </div>
 </div>
