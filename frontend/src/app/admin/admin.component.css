@@ -3045,6 +3045,110 @@ body {
 /* SINGLE CRM TABLE */
 .crm-table{width:1100px;min-width:1100px;border-collapse:collapse;background:#fff}.crm-table th{background:#eff6ff;color:#64748b;padding:16px;text-align:left;font-size:13px;font-weight:700;border-bottom:1px solid #dbeafe}.crm-table td{padding:18px 16px;border-bottom:1px solid #eef2f7;vertical-align:top}.table-scroll{width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;padding-bottom:12px;scrollbar-width:thin;scrollbar-color:#2563eb #dbeafe}.table-scroll::-webkit-scrollbar{height:8px}.table-scroll::-webkit-scrollbar-track{background:#dbeafe;border-radius:999px}.table-scroll::-webkit-scrollbar-thumb{background:#2563eb;border-radius:999px}.table-actions{display:flex;flex-direction:column;gap:8px;min-width:120px}.call-btn.mini,.delete-btn.mini{padding:10px;border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600}.call-btn.mini{background:linear-gradient(135deg,#22c55e,#16a34a)}.delete-btn.mini{background:linear-gradient(135deg,#ef4444,#dc2626)}
 
+/* ================= DELETE CONFIRMATION MODAL ================= 
+
+.confirm-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(15,23,42,.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: confirmFadeIn .2s ease;
+}
+
+.confirm-modal {
+    background: #ffffff;
+    border-radius: 26px;
+    padding: 36px 32px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 30px 60px rgba(15,23,42,.35);
+    animation: confirmPop .3s cubic-bezier(.22,.9,.25,1.4);
+}
+
+.confirm-icon {
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#fee2e2,#fecaca);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    box-shadow: inset 0 0 0 1px rgba(239,68,68,.15);
+}
+
+.confirm-modal h3 {
+    margin: 0 0 10px;
+    font-size: 21px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.confirm-modal p {
+    margin: 0 0 26px;
+    color: #64748b;
+    font-size: 14.5px;
+    line-height: 1.6;
+}
+
+.confirm-modal p strong {
+    color: #0f172a;
+}
+
+.confirm-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.confirm-cancel,
+.confirm-delete {
+    flex: 1;
+    padding: 13px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 14.5px;
+    cursor: pointer;
+    border: none;
+    transition: .2s ease;
+}
+
+.confirm-cancel {
+    background: #f1f5f9;
+    color: #334155;
+    border: 1.5px solid #e2e8f0;
+}
+
+.confirm-cancel:hover:not(:disabled) {
+    background: #e2e8f0;
+}
+
+.confirm-delete {
+    background: linear-gradient(135deg,#ef4444,#dc2626);
+    color: #ffffff;
+    box-shadow: 0 10px 24px rgba(239,68,68,.3);
+}
+
+.confirm-delete:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(239,68,68,.4);
+}
+
+.confirm-cancel:disabled,
+.confirm-delete:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}*/
+
+
+
 /* ================= DELETE CONFIRMATION MODAL ================= */
 
 .confirm-backdrop {
@@ -3146,6 +3250,26 @@ body {
     opacity: .6;
     cursor: not-allowed;
 }
+
+@keyframes confirmFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes confirmPop {
+    from { opacity: 0; transform: scale(.9) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@media(max-width:480px) {
+    .confirm-modal { padding: 28px 22px; border-radius: 22px; }
+    .confirm-icon { width: 60px; height: 60px; font-size: 26px; }
+    .confirm-actions { flex-direction: column-reverse; }
+}
+
+
+
+
 
 @keyframes confirmFadeIn {
     from { opacity: 0; }
