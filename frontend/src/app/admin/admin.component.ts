@@ -435,7 +435,7 @@ deleting = false;
     }
   }
 
-/*  async deleteQuery(q: Enquiry): Promise<void> {
+  async deleteQuery(q: Enquiry): Promise<void> {
     this.confirmTarget = q;
   }
 
@@ -460,35 +460,8 @@ deleting = false;
         alert(error?.error?.message || 'Unable to delete enquiry.');
       }
     });
-  }*/
+  }
 
-
-async deleteQuery(q: Enquiry): Promise<void> {
-  this.confirmTarget = q;
-}
-
-cancelDelete(): void {
-  if (this.deleting) return;
-  this.confirmTarget = null;
-}
-
-confirmDeleteNow(): void {
-  if (!this.confirmTarget) return;
-  const q = this.confirmTarget;
-  this.deleting = true;
-  this.api.deleteQuery(q.id).subscribe({
-    next: () => {
-      this.enquiries = this.enquiries.filter(item => item.id !== q.id);
-      this.knownIds.delete(q.id);
-      this.deleting = false;
-      this.confirmTarget = null;
-    },
-    error: error => {
-      this.deleting = false;
-      alert(error?.error?.message || 'Unable to delete enquiry.');
-    }
-  });
-}
 
   
 
