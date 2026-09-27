@@ -342,6 +342,9 @@ export class AdminComponent implements OnInit, OnDestroy {
   confirmTarget: Enquiry | null = null;
   deleting = false;
 
+  confirmTarget: Enquiry | null = null;
+deleting = false;
+
   ngOnInit(): void {
     this.api.session().subscribe({
       next: result => {
@@ -433,7 +436,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     }
   }
 
-  async deleteQuery(q: Enquiry): Promise<void> {
+/*  async deleteQuery(q: Enquiry): Promise<void> {
     this.confirmTarget = q;
   }
 
@@ -458,7 +461,37 @@ export class AdminComponent implements OnInit, OnDestroy {
         alert(error?.error?.message || 'Unable to delete enquiry.');
       }
     });
-  }
+  }*/
+
+
+async deleteQuery(q: Enquiry): Promise<void> {
+  this.confirmTarget = q;
+}
+
+cancelDelete(): void {
+  if (this.deleting) return;
+  this.confirmTarget = null;
+}
+
+confirmDeleteNow(): void {
+  if (!this.confirmTarget) return;
+  const q = this.confirmTarget;
+  this.deleting = true;
+  this.api.deleteQuery(q.id).subscribe({
+    next: () => {
+      this.enquiries = this.enquiries.filter(item => item.id !== q.id);
+      this.knownIds.delete(q.id);
+      this.deleting = false;
+      this.confirmTarget = null;
+    },
+    error: error => {
+      this.deleting = false;
+      alert(error?.error?.message || 'Unable to delete enquiry.');
+    }
+  });
+}
+
+  
 
   callCustomer(mobile: string): void {
     window.location.href = `tel:+91${mobile}`;
