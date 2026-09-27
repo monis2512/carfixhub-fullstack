@@ -781,29 +781,9 @@
 
   </div>
 
-  <!-- Delete confirmation -->
-<div class="confirm-backdrop" *ngIf="confirmTarget as q" (click)="cancelDelete()">
-  <div class="confirm-modal" (click)="$event.stopPropagation()">
-    <div class="confirm-icon">🗑️</div>
-    <h3>Delete this enquiry?</h3>
-    <p>
-      You're about to permanently delete enquiry <strong>#{{ q.id }}</strong>
-      for <strong>{{ q.customerName || 'this customer' }}</strong>
-      ({{ q.carModel }}). This can't be undone.
-    </p>
-    <div class="confirm-actions">
-      <button type="button" class="confirm-cancel" [disabled]="deleting" (click)="cancelDelete()">
-        Cancel
-      </button>
-      <button type="button" class="confirm-delete" [disabled]="deleting" (click)="confirmDeleteNow()">
-        <span *ngIf="!deleting">🗑 Delete</span>
-        <span *ngIf="deleting">Deleting…</span>
-      </button>
-    </div>
-  </div>
-</div>
+  
 
-  <!-- Delete confirmation 
+  <!-- Delete confirmation--> 
 
   <div class="confirm-backdrop" *ngIf="confirmTarget as q" (click)="cancelDelete()">
 
@@ -844,7 +824,7 @@
 
   </div>
 
-</div>-->
+</div>
 
 <!-- Login -->
 
