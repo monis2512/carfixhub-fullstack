@@ -339,8 +339,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   loading = false;
   toast = '';
   showPassword = false;
-  confirmTarget: Enquiry | null = null;
-  deleting = false;
+  
 
   confirmTarget: Enquiry | null = null;
 deleting = false;
