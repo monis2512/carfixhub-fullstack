@@ -1,5 +1,5 @@
 
-
+<!--
 <div class="dashboard" *ngIf="authenticated; else loginView">
 
   
@@ -470,6 +470,580 @@
   </div>
 
 </ng-template>
+
+-->
+
+
+
+<div class="dashboard" *ngIf="authenticated; else loginView">
+
+  <!-- Top Header -->
+  <header class="topbar">
+
+    <button class="menu-btn" (click)="sidebarOpen = !sidebarOpen">
+      ☰
+    </button>
+
+    <div class="header-title">
+      <h1>CarFixHub</h1>
+      <p>{{ enquiries.length }} Active Enquiries</p>
+    </div>
+
+    <button class="refresh-fab" (click)="loadQueries(true)">
+      🔄
+    </button>
+
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" [class.open]="sidebarOpen">
+
+  <div class="sidebar-top">
+
+    <div class="brand">
+
+      <div class="logo">🚗</div>
+
+      <div>
+        <h2>CarFixHub</h2>
+        <p>Admin Panel</p>
+      </div>
+
+    </div>
+
+    <button class="close-menu" (click)="sidebarOpen=false">
+      ✕
+    </button>
+
+  </div>
+
+  <nav>
+<a class="active" (click)="scrollToEnquiries()">
+  📋 Enquiries
+</a>
+    
+  </nav>
+
+  <div class="sidebar-footer">
+
+    <button class="logout-btn" (click)="logout()">
+      🚪 Logout
+    </button>
+
+  </div>
+
+</aside>
+
+<div class="overlay"
+     *ngIf="sidebarOpen"
+     (click)="sidebarOpen=false">
+</div>
+
+  <!-- Main -->
+  <main class="main">
+
+    <div class="toast" *ngIf="toast">
+      {{ toast }}
+    </div>
+
+    <!-- Hero -->
+
+    <section class="hero">
+
+      <div class="hero-text">
+
+        <span class="tag">
+          Welcome Back 👋
+        </span>
+
+        <h1>Manage Repair Requests</h1>
+
+        <p>
+          Denting • Painting • Scratch Repair
+        </p>
+
+        <div class="hero-actions">
+
+        <!--<button class="primary-btn" (click)="loadQueries(true)">
+            🔄 Refresh
+          </button> -->
+
+          <a routerLink="/" class="secondary-btn">
+            🌐 Customer Website
+          </a>
+
+        </div>
+
+      </div>
+
+      <img
+        src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80"
+        alt="Car">
+
+    </section>
+
+    <!-- Stats -->
+
+    <section class="stats">
+
+      <div class="stat-card">
+
+        <div class="icon blue">📋</div>
+
+        <span>Total</span>
+
+        <h2>{{ enquiries.length }}</h2>
+
+      </div>
+
+      <div class="stat-card">
+
+        <div class="icon purple">📅</div>
+
+        <span>Today</span>
+
+        <h2>{{ enquiries.length }}</h2>
+
+      </div>
+
+      <div class="stat-card">
+
+        <div class="icon green">🔧</div>
+
+        <span>Services</span>
+
+        <h2>3</h2>
+
+      </div>
+
+    </section>
+
+    <!-- List -->
+
+    <section class="list" id="enquiries">
+
+       <div class="list-header">
+
+  <div class="header-left">
+
+    <h2>Recent Enquiries</h2>
+
+    <p>{{ filteredEnquiries.length }} result(s)</p>
+
+  </div>
+
+  <button class="refresh-small" (click)="loadQueries(true)">
+    🔄 Refresh
+  </button>
+
+</div>
+
+<div class="search-box">
+
+  <span class="search-icon">🔍</span>
+<input
+  type="text"
+  [(ngModel)]="searchTerm"
+  (ngModelChange)="currentPage=1"
+  placeholder="Search by Customer Name or Car Model or Phone Number">
+
+</div>
+
+<div class="status-filters">
+
+  <button
+    type="button"
+    class="status-chip"
+    [class.active]="statusFilter === 'All'"
+    (click)="setStatusFilter('All')">
+    All <span class="chip-count">{{ enquiries.length }}</span>
+  </button>
+
+  <button
+    type="button"
+    class="status-chip new"
+    [class.active]="statusFilter === 'New'"
+    (click)="setStatusFilter('New')">
+    New <span class="chip-count">{{ statusCount('New') }}</span>
+  </button>
+
+  <button
+    type="button"
+    class="status-chip progress"
+    [class.active]="statusFilter === 'In Progress'"
+    (click)="setStatusFilter('In Progress')">
+    In Progress <span class="chip-count">{{ statusCount('In Progress') }}</span>
+  </button>
+
+  <button
+    type="button"
+    class="status-chip done"
+    [class.active]="statusFilter === 'Completed'"
+    (click)="setStatusFilter('Completed')">
+    Completed <span class="chip-count">{{ statusCount('Completed') }}</span>
+  </button>
+
+</div>
+      
+      <div class="enquiry-table-card">
+
+  <div class="table-scroll">
+
+    <table class="crm-table">
+
+      <thead>
+  <tr>
+    <th>Enquiry No.</th>
+    <th>Car</th>
+    <th>Service</th>
+    <th>Status</th>
+    <th>Customer Name</th>
+    <th>Customer Mobile Number</th>
+    <th>Damage</th>
+    <th>Submitted On</th>
+    <th>Photos</th>
+    <th>Action</th>
+  </tr>
+</thead>
+
+      <tbody>
+
+        <tr *ngFor="let enquiry of paginatedEnquiries" [class.row-new]="recentlyNewIds.has(enquiry.id)">
+
+          <td>
+            <strong>#{{ enquiry.id }}</strong>
+          </td>
+
+          <td>{{ enquiry.carModel }}</td>
+
+          <td>
+            <span class="service-pill">
+              {{ enquiry.serviceType }}
+            </span>
+          </td>
+
+          <td>
+            <select
+              class="status-select"
+              [class.st-new]="getStatus(enquiry.id) === 'New'"
+              [class.st-progress]="getStatus(enquiry.id) === 'In Progress'"
+              [class.st-done]="getStatus(enquiry.id) === 'Completed'"
+              [ngModel]="getStatus(enquiry.id)"
+              (ngModelChange)="setStatus(enquiry.id, $event)">
+              <option *ngFor="let s of statusOptions" [value]="s">{{ s }}</option>
+            </select>
+          </td>
+
+          <td>{{ enquiry.customerName }}</td>
+
+          <td>{{ enquiry.mobileNumber }}</td>
+
+          <td class="damage-cell">
+            {{ enquiry.description }}
+          </td>
+
+          <td class="submitted-cell">
+  {{ formatDateTime(enquiry.createdAt) }}
+</td>
+
+          <td>
+
+            <div class="photo-cell">
+
+              <div
+                class="mini-photo"
+                *ngFor="let photo of photoUrls(enquiry); let i=index">
+
+                <img
+                  [src]="photo"
+                  (click)="openLightbox(photoUrls(enquiry),i)">
+
+                <button
+                  class="mini-view"
+                  (click)="openLightbox(photoUrls(enquiry),i)">
+                  View
+                </button>
+
+                <button
+                  class="mini-download"
+                  (click)="downloadImage(photo)">
+                  Download
+                </button>
+
+              </div>
+
+            </div>
+
+          </td>
+
+          <td>
+
+            <div class="table-actions">
+
+              <button
+                class="call-btn mini"
+                (click)="callCustomer(enquiry.mobileNumber)">
+                📞 Call
+              </button>
+
+              <button
+                class="delete-btn mini"
+                (click)="deleteQuery(enquiry)">
+                🗑 Delete
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+<!-- Mobile card view (shown instead of the table under ~860px) -->
+<div class="mobile-enquiry-cards">
+
+  <div
+    class="mobile-enquiry-card"
+    *ngFor="let enquiry of paginatedEnquiries"
+    [class.row-new]="recentlyNewIds.has(enquiry.id)">
+
+    <div class="mec-top">
+      <strong>#{{ enquiry.id }}</strong>
+      <select
+        class="status-select"
+        [class.st-new]="getStatus(enquiry.id) === 'New'"
+        [class.st-progress]="getStatus(enquiry.id) === 'In Progress'"
+        [class.st-done]="getStatus(enquiry.id) === 'Completed'"
+        [ngModel]="getStatus(enquiry.id)"
+        (ngModelChange)="setStatus(enquiry.id, $event)">
+        <option *ngFor="let s of statusOptions" [value]="s">{{ s }}</option>
+      </select>
+    </div>
+
+    <div class="mec-car">{{ enquiry.carModel }}</div>
+    <span class="service-pill">{{ enquiry.serviceType }}</span>
+
+    <div class="mec-row"><span>Customer</span><strong>{{ enquiry.customerName || '—' }}</strong></div>
+    <div class="mec-row"><span>Mobile</span><strong>{{ enquiry.mobileNumber }}</strong></div>
+    <div class="mec-row"><span>Submitted</span><strong>{{ formatDateTime(enquiry.createdAt) }}</strong></div>
+
+    <div class="mec-damage">{{ enquiry.description }}</div>
+
+    <div class="mec-photos" *ngIf="photoUrls(enquiry).length">
+      <img
+        *ngFor="let photo of photoUrls(enquiry); let i = index"
+        [src]="photo"
+        (click)="openLightbox(photoUrls(enquiry), i)">
+    </div>
+
+    <div class="mec-actions">
+      <button class="call-btn mini" (click)="callCustomer(enquiry.mobileNumber)">📞 Call</button>
+      <button class="delete-btn mini" (click)="deleteQuery(enquiry)">🗑 Delete</button>
+    </div>
+
+  </div>
+
+</div>
+
+      <div class="pagination" *ngIf="totalPages > 1">
+
+  <button
+    class="page-btn"
+    (click)="prevPage()"
+    [disabled]="currentPage===1">
+
+    ← Previous
+
+  </button>
+
+  <button
+    *ngFor="let page of pages"
+    class="page-number"
+    [class.active]="page===currentPage"
+    (click)="goToPage(page)">
+
+    {{ page }}
+
+  </button>
+
+  <button
+    class="page-btn"
+    (click)="nextPage()"
+    [disabled]="currentPage===totalPages">
+
+    Next →
+
+  </button>
+
+</div>
+
+    </section>
+
+  </main>
+
+  <!-- Lightbox -->
+
+  <div class="lightbox" *ngIf="lightboxOpen">
+
+    <button class="close" (click)="closeLightbox()">
+      ✕
+    </button>
+
+    <button class="nav-btn left" (click)="prevImage()">
+      ‹
+    </button>
+
+    <img [src]="lightboxImages[currentImageIndex]">
+
+    <button class="nav-btn right" (click)="nextImage()">
+      ›
+    </button>
+
+    <div class="lightbox-bottom">
+
+      <button
+        class="download-lightbox"
+        (click)="downloadImage(lightboxImages[currentImageIndex])">
+
+        ⬇ Download Image
+
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- Delete confirmation -->
+
+  <div class="confirm-backdrop" *ngIf="confirmTarget as q" (click)="cancelDelete()">
+
+    <div class="confirm-modal" (click)="$event.stopPropagation()">
+
+      <div class="confirm-icon">🗑️</div>
+
+      <h3>Delete this enquiry?</h3>
+
+      <p>
+        You're about to permanently delete enquiry <strong>#{{ q.id }}</strong>
+        for <strong>{{ q.customerName || 'this customer' }}</strong>
+        ({{ q.carModel }}). This can't be undone.
+      </p>
+
+      <div class="confirm-actions">
+
+        <button
+          type="button"
+          class="confirm-cancel"
+          [disabled]="deleting"
+          (click)="cancelDelete()">
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          class="confirm-delete"
+          [disabled]="deleting"
+          (click)="confirmDeleteNow()">
+          <span *ngIf="!deleting">🗑 Delete</span>
+          <span *ngIf="deleting">Deleting…</span>
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Login -->
+
+<ng-template #loginView>
+
+  <div class="login-page">
+
+    <div class="login-hero">
+
+      <span class="login-tag">CarFixHub Admin</span>
+
+      <h1>Workshop Dashboard</h1>
+
+      <p>Manage customer repair requests professionally.</p>
+
+      <img
+        class="login-car"
+        src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80">
+
+    </div>
+
+    <div class="login-card">
+
+      <div class="login-logo">🚗</div>
+
+      <h2>Welcome Back</h2>
+
+      <p class="login-subtitle">Sign in to continue</p>
+
+      <div class="input-group">
+
+        <label>Username</label>
+
+        <input [(ngModel)]="username" placeholder="Username">
+
+      </div>
+
+      <div class="input-group">
+
+        <label>Password</label>
+
+        <div class="password-wrapper">
+
+          <input
+            [(ngModel)]="password"
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="Password">
+
+          <button
+            type="button"
+            class="toggle-password"
+            (click)="showPassword=!showPassword">
+
+            {{ showPassword ? '🙈' : '👁' }}
+
+          </button>
+
+        </div>
+
+      </div>
+
+      <button class="login-btn" (click)="login()">
+        Login →
+      </button>
+
+      <a routerLink="/" class="customer-btn">
+  🚗 Customer Website
+      </a>
+
+      <div class="error" *ngIf="loginError">
+        {{ loginError }}
+      </div>
+
+    </div>
+
+  </div>
+
+</ng-template>
+
+
+
+
 
 
 
