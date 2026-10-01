@@ -343,9 +343,7 @@
   font-size:15.5px;
 }
 
-/* =========================
-   SERVICES
-========================= */
+
 
 .service-grid{
   display:grid;
@@ -415,9 +413,7 @@
   line-height:1.6;
 }
 
-/* =========================
-   BEFORE / AFTER GALLERY
-========================= */
+
 
 .ba-tabs{
   display:flex;
@@ -545,9 +541,7 @@
   font-style:italic;
 }
 
-/* =========================
-   STATS STRIP
-========================= */
+
 
 .stats-section{
   max-width:1000px;
@@ -587,9 +581,7 @@
   }
 }
 
-/* =========================
-   TESTIMONIALS
-========================= */
+
 
 .testimonial-carousel{
   max-width:640px;
@@ -727,9 +719,7 @@
   }
 }
 
-/* =========================
-   ENQUIRY FORM
-========================= */
+
 
 .wrap{
   max-width:760px;
@@ -757,7 +747,7 @@
   margin-bottom:24px;
 }
 
-/* Stepper */
+
 
 .stepper{
   display:flex;
@@ -926,7 +916,6 @@ textarea{
   line-height:1.6;
 }
 
-/* Service Selection */
 
 .services{
   display:grid;
@@ -962,7 +951,7 @@ textarea{
   box-shadow:0 8px 18px rgba(37,99,235,.28);
 }
 
-/* Submit */
+
 
 .submit{
   width:100%;
@@ -992,7 +981,7 @@ textarea{
   transform:none;
 }
 
-/* Status */
+
 
 .status{
   display:none;
@@ -1019,7 +1008,7 @@ textarea{
   color:#991b1b;
 }
 
-/* Contact */
+
 
 .contact{
   display:grid;
@@ -1051,7 +1040,7 @@ textarea{
   transform:translateY(-2px);
 }
 
-/* Extras */
+
 
 .counter{
   text-align:right;
@@ -1118,9 +1107,7 @@ textarea{
   font-size:14px;
 }
 
-/* =========================
-   SUCCESS MODAL
-========================= */
+
 
 .modal-backdrop{
   position:fixed;
@@ -1177,9 +1164,7 @@ textarea{
   width:100%;
 }
 
-/* =========================
-   FOOTER
-========================= */
+
 
 .site-footer{
   background:var(--ink-900);
@@ -1252,9 +1237,7 @@ textarea{
   }
 }
 
-/* =========================
-   WHATSAPP FLOATING BUBBLE
-========================= */
+
 
 .whatsapp-bubble{
   position:fixed;
@@ -1281,9 +1264,7 @@ textarea{
   }
 }
 
-/* =========================
-   MOBILE STICKY CTA
-========================= */
+
 
 .mobile-cta{
   display:none;
@@ -1328,9 +1309,7 @@ textarea{
   }
 }
 
-/* =========================
-   ANIMATIONS
-========================= */
+
 
 @keyframes cinematicZoom{
   0%{ transform:scale(1.08); }
@@ -1373,9 +1352,7 @@ textarea{
   50%{ box-shadow:0 10px 25px rgba(37,211,102,.45),0 0 0 10px rgba(37,211,102,.15); }
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+
 
 @media(max-width:900px){
 
