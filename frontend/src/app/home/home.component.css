@@ -1552,14 +1552,12 @@ textarea{
 
 .reveal{
   opacity:0;
-  clip-path:inset(0 0 100% 0);
-  transform:translateY(16px);
-  transition:clip-path .8s cubic-bezier(.22,.9,.25,1), opacity .5s ease, transform .8s cubic-bezier(.22,.9,.25,1);
+  transform:translateY(28px);
+  transition:opacity .7s ease, transform .7s ease;
 }
 
 .reveal.in-view{
   opacity:1;
-  clip-path:inset(0 0 0% 0);
   transform:translateY(0);
 }
 
