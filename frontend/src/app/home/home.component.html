@@ -20,7 +20,14 @@
   <a class="admin-login" routerLink="/admin">Admin Login</a>
 </header>
 
-<section class="hero-3d">
+<section class="hero-3d hero-dark">
+
+  <div class="hero-sparks">
+    <span class="spark" *ngFor="let n of [1,2,3,4,5,6,7,8]"></span>
+  </div>
+
+  <div class="float-blob blob-1"></div>
+  <div class="float-blob blob-2"></div>
 
   <div class="hero-content">
 
@@ -55,10 +62,7 @@
 
   </div>
 
-  <div class="float-blob blob-1"></div>
-  <div class="float-blob blob-2"></div>
-
-  <div class="hero-image" (mousemove)="onHeroMove($event)">
+  <div class="hero-image">
 
     <img
       src="assets/hero-repair-3d.webp"
@@ -69,15 +73,26 @@
 
     <div class="paint-glow"></div>
     <div class="repair-light"></div>
-    <div class="mouse-spotlight"></div>
     <div class="shine"></div>
+    <div class="hero-image-glow"></div>
 
   </div>
 
 </section>
 
-<div class="road-divider reveal">
-  <span class="road-car">🚗</span>
+<div class="marquee">
+  <div class="marquee-track">
+    <span>✦ Dent Repair</span>
+    <span>✦ Paint Matching</span>
+    <span>✦ Scratch Removal</span>
+    <span>✦ Free Inspection</span>
+    <span>✦ Same-Day Service</span>
+    <span>✦ Dent Repair</span>
+    <span>✦ Paint Matching</span>
+    <span>✦ Scratch Removal</span>
+    <span>✦ Free Inspection</span>
+    <span>✦ Same-Day Service</span>
+  </div>
 </div>
 
 <section class="services-section" id="services">
@@ -88,19 +103,19 @@
 
   <div class="service-grid">
 
-    <div class="service-card" style="--i:0" (mousemove)="onCardTilt($event)" (mouseleave)="onCardTiltReset($event)">
+    <div class="service-card" style="--i:0">
       <div class="icon">🔨</div>
       <h3>Denting</h3>
       <p>Restore your car's original shape with precision repairs.</p>
     </div>
 
-    <div class="service-card" style="--i:1" (mousemove)="onCardTilt($event)" (mouseleave)="onCardTiltReset($event)">
+    <div class="service-card" style="--i:1">
       <div class="icon">🎨</div>
       <h3>Painting</h3>
       <p>Professional paint matching for a factory-like finish.</p>
     </div>
 
-    <div class="service-card" style="--i:2" (mousemove)="onCardTilt($event)" (mouseleave)="onCardTiltReset($event)">
+    <div class="service-card" style="--i:2">
       <div class="icon">✨</div>
       <h3>Scratch Repair</h3>
       <p>Remove scratches and restore a clean appearance.</p>
@@ -152,8 +167,8 @@
 </section>
 
 <section class="stats-section reveal" #statsSection>
-  <div class="stat" *ngFor="let s of stats">
-    <div class="stat-value">{{ s.current }}{{ s.suffix }}</div>
+  <div class="stat-glow" *ngFor="let s of stats">
+    <div class="stat-number">{{ s.current }}{{ s.suffix }}</div>
     <div class="stat-label">{{ s.label }}</div>
   </div>
 </section>

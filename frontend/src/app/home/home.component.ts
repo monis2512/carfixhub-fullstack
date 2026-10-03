@@ -412,31 +412,6 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     this.previewUrls = [];
   }
 
-  // ===== 3D tilt on hover (service cards) =====
-  onCardTilt(e: MouseEvent): void {
-    const card = e.currentTarget as HTMLElement;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const rotateX = ((y / rect.height) - 0.5) * -12;
-    const rotateY = ((x / rect.width) - 0.5) * 12;
-    card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
-  }
-
-  onCardTiltReset(e: MouseEvent): void {
-    (e.currentTarget as HTMLElement).style.transform = '';
-  }
-
-  // ===== Mouse-tracking spotlight on the hero image =====
-  onHeroMove(e: MouseEvent): void {
-    const el = e.currentTarget as HTMLElement;
-    const rect = el.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    el.style.setProperty('--mx', x + '%');
-    el.style.setProperty('--my', y + '%');
-  }
-
   // ===== Button ripple on click =====
   createRipple(e: MouseEvent): void {
     const btn = e.currentTarget as HTMLElement;
